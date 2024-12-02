@@ -1,4 +1,4 @@
-import LoadMecab from "https://dk470.github.io/kcmecab/libmecab.js";
+import LoadMecab from "file:///android_asset/libmecab.js";
 
 function locateFile(fn) {
     if (fn === 'libmecab.data') {
