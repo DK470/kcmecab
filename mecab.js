@@ -5,7 +5,7 @@ function locateFile(fn) {
         return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data";
     }
     if (fn === 'libmecab.wasm') {
-        return "https://raw.githubusercontent.com/DK470/kcmecab/refs/heads/main/libmecab.wasm";
+        return "https://dk470.github.io/kcmecab//libmecab.wasm";
     }
 }
 
