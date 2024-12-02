@@ -1,13 +1,11 @@
-import LoadMecab from "./libmecab.js";
+import LoadMecab from "https://raw.githubusercontent.com/DK470/kcmecab/refs/heads/main/libmecab.js";
 
 function locateFile(fn) {
     if (fn === 'libmecab.data') {
-        // Specify the full URL to fetch libmecab.data
         return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data";
     }
     if (fn === 'libmecab.wasm') {
-        // Modify if needed for the correct URL for the WASM file
-        return new URL('libmecab.wasm', import.meta.url).toString();
+        return "https://raw.githubusercontent.com/DK470/kcmecab/refs/heads/main/libmecab.wasm";
     }
 }
 
@@ -31,7 +29,6 @@ class Mecab {
         }
 
         let out_length = str.length * 128;
-
         let out_arr = lib._malloc(out_length);
         let ret = lib.ccall('mecab_sparse_tostr3', 'number', ['number', 'string', 'number', 'number', 'number'],
             [instance, str, lib.lengthBytesUTF8(str) + 1, out_arr, out_length]);
