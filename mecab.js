@@ -5,7 +5,7 @@ function locateFile(fn) {
         return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data";
     }
     if (fn === 'libmecab.wasm') {
-        return "https://dk470.github.io/kcmecab/libmecab.wasm";
+        return "file:///android_asset/libmecab.wasm"; // Local asset path for libmecab.wasm
     }
 }
 
