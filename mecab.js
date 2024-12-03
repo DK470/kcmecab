@@ -1,17 +1,30 @@
+import LoadMecab from "file:///android_asset/libmecab.js";
+
+// Efficient file locator
+function locateFile(fn) {
+    // Handle the wasm and data file paths separately
+    switch(fn) {
+        case 'libmecab.data':
+            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data";  // Online libmecab.data file
+        case 'libmecab.wasm':
+            return "file:///android_asset/libmecab.wasm";  // Local path for wasm file
+        default:
+            return null; // Fallback for other files if necessary
+    }
+}
+
 let lib;
 let instance;
 let libPromise = LoadMecab({ locateFile });
 
+// Ensure Mecab is ready asynchronously
 libPromise.then((loadedLib) => {
     lib = loadedLib;
     // Initialize Mecab instance after loading
     instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
     console.log("Mecab has been successfully initialized!");
-    
-    hideProgressBar(); // Hide the progress bar when Mecab is fully initialized
 }).catch((error) => {
     console.error("Failed to load Mecab:", error);
-    hideProgressBar(); // Hide the progress bar if Mecab fails to load
 });
 
 // Mecab class for interacting with the library
@@ -38,7 +51,7 @@ class Mecab {
         lib._free(outArr);
 
         if (!ret) {
-            console.error(`Mecab failed for input string: "${str}"`);
+            console.error(Mecab failed for input string: "${str}");
             return [];
         }
 
@@ -65,3 +78,5 @@ class Mecab {
         return result;
     }
 }
+
+export default Mecab;
