@@ -32,6 +32,9 @@ class Mecab {
     static async waitReady() {
         // Ensure that the library is fully loaded and ready
         await libPromise;
+        // Trigger an event once Mecab is loaded
+        const event = new CustomEvent('mecabLoaded');
+        document.dispatchEvent(event);
     }
 
     static query(str) {
@@ -51,7 +54,7 @@ class Mecab {
         lib._free(outArr);
 
         if (!ret) {
-            console.error(Mecab failed for input string: "${str}");
+            console.error(`Mecab failed for input string: "${str}"`);
             return [];
         }
 
