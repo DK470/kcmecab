@@ -23,9 +23,13 @@ libPromise.then((loadedLib) => {
     // Initialize Mecab instance after loading
     instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
     console.log("Mecab has been successfully initialized!");
+
+    // Dispatch a custom event to signal completion
+    document.dispatchEvent(new CustomEvent('mecabReady'));
 }).catch((error) => {
     console.error("Failed to load Mecab:", error);
 });
+
 
 // Mecab class for interacting with the library
 class Mecab {
