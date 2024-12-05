@@ -1,13 +1,17 @@
 import LoadMecab from "file:///android_asset/libmecab.js";
 
-// Efficient file locator
 function locateFile(fn) {
-    // Handle the wasm and data file paths separately
     switch(fn) {
         case 'libmecab.data':
-            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data";  // Online libmecab.data file
+            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data"; // Online libmecab.data file
         case 'libmecab.wasm':
-            return "file:///android_asset/libmecab.wasm";  // Local path for wasm file
+            return "file:///android_asset/libmecab.wasm"; // Local path for wasm file
+        case 'sys.dic':
+            return "https://my-senpai.com/parsing/unidic/sys.dic"; // Online sys.dic
+        case 'matrix.bin':
+            return "https://my-senpai.com/parsing/unidic/matrix.bin"; // Online matrix.bin
+        case 'unk.dic':
+            return "https://my-senpai.com/parsing/unidic/unk.dic"; // Online unk.dic
         default:
             return null; // Fallback for other files if necessary
     }
