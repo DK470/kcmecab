@@ -1,13 +1,11 @@
 import LoadMecab from "file:///android_asset/libmecab.js";
 
 function locateFile(fn) {
-    switch(fn) {
-        case 'libmecab.data':
-            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data"; // Online libmecab.data file
-        case 'libmecab.wasm':
-            return "file:///android_asset/libmecab.wasm"; // Local path for wasm file
-        default:
-            return null; // Fallback for other files if necessary
+    if (fn == 'libmecab.data') {
+        return new URL('libmecab.data', import.meta.url).toString();
+    }
+    if (fn == 'libmecab.wasm') {
+        return new URL('libmecab.wasm', import.meta.url).toString();
     }
 }
 
