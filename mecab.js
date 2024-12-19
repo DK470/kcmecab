@@ -1,5 +1,6 @@
 import LoadMecab from "file:///android_asset/libmecab.js";
 
+// Function to locate files
 function locateFile(fn) {
     switch(fn) {
         case 'libmecab.data':
@@ -13,10 +14,12 @@ function locateFile(fn) {
 
 let lib;
 let instance;
-let libPromise = LoadMecab({ locateFile });
 
-// Ensure Mecab is ready asynchronously
-libPromise.then((loadedLib) => {
+// Promise for loading the Mecab library and data
+let libPromise = Promise.all([
+    LoadMecab({ locateFile }),
+    loadFile('libmecab.data') // Fetching libmecab.data file
+]).then(([loadedLib, dataFile]) => {
     lib = loadedLib;
     // Initialize Mecab instance after loading
     instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
@@ -27,6 +30,31 @@ libPromise.then((loadedLib) => {
 }).catch((error) => {
     console.error("Failed to load Mecab:", error);
 });
+
+// Function to load files (with caching)
+async function loadFile(fileUrl) {
+    const cachedFile = await checkCache(fileUrl);
+    if (cachedFile) {
+        return cachedFile;
+    }
+
+    const response = await fetch(fileUrl);
+    const fileData = await response.arrayBuffer();
+    storeInCache(fileUrl, fileData);
+    return fileData;
+}
+
+// Cache management: checking if the file is cached
+async function checkCache(fileUrl) {
+    // Replace with actual cache checking logic (e.g., IndexedDB, LocalStorage, etc.)
+    return null; // For now, returning null for simplicity
+}
+
+// Cache management: storing the file in cache
+async function storeInCache(fileUrl, data) {
+    // Implement caching logic (e.g., IndexedDB, LocalStorage, etc.)
+    console.log(`Storing file in cache: ${fileUrl}`);
+}
 
 // Mecab class for interacting with the library
 class Mecab {
@@ -43,13 +71,16 @@ class Mecab {
             throw new Error('Mecab not ready');
         }
 
+        // Allocate memory for the query string
         let outLength = str.length * 128;
         let outArr = lib._malloc(outLength);
         let result = [];
 
         try {
+            // Perform query operation on the Mecab instance
             let ret = lib.ccall('mecab_sparse_tostr3', 'number', ['number', 'string', 'number', 'number', 'number'], 
-                                 [instance, str, lib.lengthBytesUTF8(str) + 1, outArr, outLength]);
+                [instance, str, lib.lengthBytesUTF8(str) + 1, outArr, outLength]);
+            
             if (!ret) {
                 console.error("Mecab returned no result for input string.");
                 return [];
