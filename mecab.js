@@ -26,19 +26,17 @@ libPromise.then((loadedLib) => {
     console.error("Failed to load Mecab:", error);
 });
 
-// Mecab class for interacting with the library
 class Mecab {
     static async waitReady() {
-        // Ensure that the library is fully loaded and ready
-        await libPromise;
-        // Trigger an event once Mecab is loaded
-        const event = new CustomEvent('mecabLoaded');
-        document.dispatchEvent(event);
+        await libPromise; // Ensure the library is fully loaded before proceeding
+        // Trigger the 'mecabLoaded' event to notify when the library is ready
+        document.dispatchEvent(new CustomEvent('mecabLoaded'));
     }
 
     static query(str) {
         if (!instance) {
-            throw new Error('Mecab not ready');
+            console.error('Mecab not ready');
+            return [];
         }
 
         let outLength = str.length * 128;
@@ -46,8 +44,9 @@ class Mecab {
         let result = [];
 
         try {
-            let ret = lib.ccall('mecab_sparse_tostr3', 'number', ['number', 'string', 'number', 'number', 'number'], 
-                                 [instance, str, lib.lengthBytesUTF8(str) + 1, outArr, outLength]);
+            let ret = lib.ccall('mecab_sparse_tostr3', 'number', ['number', 'string', 'number', 'number', 'number'],
+                [instance, str, lib.lengthBytesUTF8(str) + 1, outArr, outLength]);
+
             if (!ret) {
                 console.error("Mecab returned no result for input string.");
                 return [];
@@ -67,6 +66,7 @@ class Mecab {
                 if (sp.length !== 2) return null;
                 const [word, fieldStr] = sp;
                 const fields = fieldStr.split(',');
+
                 return fields.length === 9 ? {
                     word,
                     pos: fields[0],
@@ -80,9 +80,9 @@ class Mecab {
                     pronunciation: fields[8]
                 } : null;
             }).filter(Boolean);
-
         } catch (error) {
             console.error("Error during query processing:", error);
+            return [];
         }
 
         return result;
