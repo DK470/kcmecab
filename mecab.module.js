@@ -1,16 +1,19 @@
 import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.js"; 
 
 function locateFile(fn) {
+    let url = '';
     if (fn === 'libmecab.data') {
-        // Load the libmecab.data file from unpkg CDN
-        return 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data';
+        url = 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data';
+    } else if (fn === 'libmecab.wasm') {
+        url = 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.wasm';
+    } else {
+        return fn;  // Return the default file if it's neither of the two
     }
-    if (fn === 'libmecab.wasm') {
-        // Load the libmecab.wasm file from unpkg CDN
-        return 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.wasm';
-    }
-    return fn;  // Default behavior if the file name is not 'libmecab.data' or 'libmecab.wasm'
+
+    console.log(`Loading ${fn} from: ${url}`);
+    return url;  // Ensure the correct URL is returned
 }
+
 
 var lib;
 var instance;
