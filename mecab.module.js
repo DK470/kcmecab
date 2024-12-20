@@ -30,7 +30,6 @@ libPromise.then((loadedLib) => {
     console.error("Failed to load Mecab:", error);
 });
 
-
 // Mecab class for interacting with the library
 class Mecab {
     static async waitReady() {
@@ -58,7 +57,7 @@ class Mecab {
         lib._free(outArr);
 
         if (!ret) {
-            console.error(Mecab failed for input string: "${str}");
+            console.error(`Mecab failed for input string: "${str}"`);
             return [];
         }
 
