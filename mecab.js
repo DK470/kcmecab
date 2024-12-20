@@ -1,4 +1,4 @@
-import LoadMecab from "./assets/libmecab.js";
+import LoadMecab from "https://unpkg.com/browse/mecab-wasm@1.0.3/lib/libmecab.js";
 
 function locateFile(fn) {
     if (fn === 'libmecab.data') {
