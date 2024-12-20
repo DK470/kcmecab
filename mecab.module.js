@@ -1,14 +1,16 @@
-import LoadMecab from "/assets/libmecab.js";
+import LoadMecab from "https://dk470.github.io/kcmecab/mecab.module.js";
 
+// Modify the locateFile function to use hosted URLs
 function locateFile(fn) {
     if (fn === 'libmecab.data') {
-        // Load the data file from the remote CMS
-        return 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data';
+        // If you're using a data file, you can load it from GitHub or another remote server
+        return 'https://dk470.github.io/kcmecab/libmecab.data'; // Ensure this is the correct URL
     }
     if (fn === 'libmecab.wasm') {
-        // Load the WASM file from the app's local assets
-        return 'file:///android_asset/libmecab.wasm';  // Correct path for local file in assets
+        // Load the WASM file from GitHub (or another remote location)
+        return 'https://dk470.github.io/kcmecab/libmecab.wasm'; // Correct URL to the hosted WASM file
     }
+    return fn; // Return the default file name if no special cases
 }
 
 let lib;
