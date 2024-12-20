@@ -2,7 +2,7 @@ import LoadMecab from "https://dk470.github.io/kcmecab/mecab.module.js";
 
 function locateFile(fn) {
     if (fn === 'libmecab.data') {
-           return 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data'; 
+           return 'https://dk470.github.io/kcmecab/libmecab.data'; 
     }
     if (fn === 'libmecab.wasm') {
         // Load the WASM file from GitHub (or another remote location)
