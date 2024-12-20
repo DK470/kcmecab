@@ -1,4 +1,4 @@
-import LoadMecab from "https://dk470.github.io/kcmecab/libmecab.js";
+import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.js";
 
 function locateFile(fn) {
     if (fn === 'libmecab.data') {
