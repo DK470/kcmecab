@@ -1,61 +1,86 @@
-import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.js";
+import LoadMecab from "file:///android_asset/libmecab.js";
 
+// Efficient file locator
 function locateFile(fn) {
-    let url = '';
-    if (fn === 'libmecab.data') {
-        url = 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data';  // Correct URL for the data file
-    } else if (fn === 'libmecab.wasm') {
-        url = 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.wasm';  // Correct URL for the wasm file
-    } else {
-        return fn;  // Return the default file if it's neither of the two
+    // Handle the wasm and data file paths separately
+    switch(fn) {
+        case 'libmecab.data':
+            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data";  // Online libmecab.data file
+        case 'libmecab.wasm':
+            return "file:///android_asset/libmecab.wasm";  // Local path for wasm file
+        default:
+            return null; // Fallback for other files if necessary
     }
-
-    console.log(`Resolving ${fn} to: ${url}`);
-    return url;  // Return the URL to fetch the file
 }
 
+let lib;
+let instance;
+let libPromise = LoadMecab({ locateFile });
 
-var lib;
-var instance;
-const libPromise = LoadMecab({ locateFile });
-
-libPromise.then(x => { 
-    lib = x;
+// Ensure Mecab is ready asynchronously
+libPromise.then((loadedLib) => {
+    lib = loadedLib;
+    // Initialize Mecab instance after loading
     instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
+    console.log("Mecab has been successfully initialized!");
+
+    // Dispatch a custom event to signal completion
+    document.dispatchEvent(new CustomEvent('mecabReady'));
+}).catch((error) => {
+    console.error("Failed to load Mecab:", error);
 });
 
+
+// Mecab class for interacting with the library
 class Mecab {
     static async waitReady() {
+        // Ensure that the library is fully loaded and ready
         await libPromise;
+        // Trigger an event once Mecab is loaded
+        const event = new CustomEvent('mecabLoaded');
+        document.dispatchEvent(event);
     }
 
     static query(str) {
-        if (instance == null) {
-            throw 'Mecab not ready';
+        if (!instance) {
+            throw new Error('Mecab not ready');
         }
 
-        let out_length = str.length * 128;
-        let out_arr = lib._malloc(out_length);
-        let ret = lib.ccall('mecab_sparse_tostr3', 'number', ['number', 'string', 'number', 'number', 'number'],
-                                 [instance, str, lib.lengthBytesUTF8(str)+1, out_arr, out_length]);
-        ret = lib.UTF8ToString(ret);
-        lib._free(out_arr);
+        let outLength = str.length * 128; // Estimate size for the output buffer
+        let outArr = lib._malloc(outLength);
+        // Call the Mecab parsing function
+        let ret = lib.ccall(
+            'mecab_sparse_tostr3', 'number', 
+            ['number', 'string', 'number', 'number', 'number'], 
+            [instance, str, lib.lengthBytesUTF8(str) + 1, outArr, outLength]
+        );
+        ret = lib.UTF8ToString(ret); // Convert result to a readable string
+        lib._free(outArr);
 
-        if (ret.length == 0) {
-            console.log(`Mecab failed with string "${str}"`);
+        if (!ret) {
+            console.error(`Mecab failed for input string: "${str}"`);
             return [];
         }
 
-        let result = []
-        for (let line of ret.split('\n')) {
+        // Process the output into a structured format
+        let result = ret.split('\n').map(line => {
             const sp = line.split('\t');
-            if (sp.length != 2) continue;
-
-            const [ word, field_str ] = sp;
-            // 品詞, 品詞細分類1, 品詞細分類2, 品詞細分類3, 活用形1, 活用形2, 原形, 読み, 発音
-            const [ pos, pos_detail1, pos_detail2, pos_detail3, conjugation1, conjugation2, dictionary_form, reading, pronunciation ] = field_str.split(',');
-            result[result.length] = { word, pos, pos_detail1, pos_detail2, pos_detail3, conjugation1, conjugation2, dictionary_form, reading, pronunciation };
-        }
+            if (sp.length !== 2) return null;
+            const [word, fieldStr] = sp;
+            const fields = fieldStr.split(',');
+            return fields.length === 9 ? {
+                word,
+                pos: fields[0],
+                pos_detail1: fields[1],
+                pos_detail2: fields[2],
+                pos_detail3: fields[3],
+                conjugation1: fields[4],
+                conjugation2: fields[5],
+                dictionary_form: fields[6],
+                reading: fields[7],
+                pronunciation: fields[8]
+            } : null;
+        }).filter(Boolean);
 
         return result;
     }
