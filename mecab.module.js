@@ -57,8 +57,7 @@ class Mecab {
         ret = lib.UTF8ToString(ret); // Convert result to a readable string
         lib._free(outArr);
 
-        if (!ret) {
-            console.error(Mecab failed for input string: "${str}");
+        if (!ret) {            
             return [];
         }
 
