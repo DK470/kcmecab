@@ -7,7 +7,7 @@ function locateFile(fn) {
     }
     if (fn === 'libmecab.wasm') {
         // Load the WASM file from the app's local assets
-        return '/assets/libmecab.wasm'; 
+        return 'file:///android_asset/libmecab.wasm';  // Correct path for local file in assets
     }
 }
 
