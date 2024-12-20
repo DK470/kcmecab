@@ -7,7 +7,7 @@ function locateFile(fn) {
         case 'libmecab.data':
             return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data";  // Online libmecab.data file
         case 'libmecab.wasm':
-            return "file:///android_asset/libmecab.wasm";  // Local path for wasm file
+            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.wasm";  // Local path for wasm file
         default:
             return null; // Fallback for other files if necessary
     }
