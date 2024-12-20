@@ -1,9 +1,9 @@
-import LoadMecab from "https://unpkg.com/browse/mecab-wasm@1.0.3/lib/libmecab.js";
+import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.js";
 
 function locateFile(fn) {
     if (fn === 'libmecab.data') {
         // Load the data file from the remote CMS
-        return 'https://unpkg.com/browse/mecab-wasm@1.0.3/lib/libmecab.data';
+        return 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data';
     }
     if (fn === 'libmecab.wasm') {
         // Load the WASM file from the app's local assets
