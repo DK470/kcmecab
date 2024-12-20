@@ -1,12 +1,11 @@
 import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.js";
 
-// Define the function to resolve file locations from the CDN
 function locateFile(fn) {
     let url = '';
     if (fn === 'libmecab.data') {
-        url = 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data';
+        url = 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data';  // Correct URL for the data file
     } else if (fn === 'libmecab.wasm') {
-        url = 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.wasm';
+        url = 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.wasm';  // Correct URL for the wasm file
     } else {
         return fn;  // Return the default file if it's neither of the two
     }
@@ -14,6 +13,7 @@ function locateFile(fn) {
     console.log(`Resolving ${fn} to: ${url}`);
     return url;  // Return the URL to fetch the file
 }
+
 
 var lib;
 var instance;
