@@ -1,14 +1,15 @@
-import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.js";
+import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.js"; 
 
 function locateFile(fn) {
     if (fn === 'libmecab.data') {
-           return 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data'; 
+        // Load the libmecab.data file from unpkg CDN
+        return 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data';
     }
     if (fn === 'libmecab.wasm') {
-        // Load the WASM file from GitHub (or another remote location)
-        return 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.wasm'; // Correct URL to the hosted WASM file
+        // Load the libmecab.wasm file from unpkg CDN
+        return 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.wasm';
     }
-    return fn; // Return the file name if no special cases
+    return fn;  // Default behavior if the file name is not 'libmecab.data' or 'libmecab.wasm'
 }
 
 var lib;
@@ -19,8 +20,7 @@ libPromise.then(x => {
     instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
 });
 
-class Mecab 
-{
+class Mecab {
     static async waitReady() {
         await libPromise;
     }
@@ -31,7 +31,6 @@ class Mecab
         }
 
         let out_length = str.length * 128;
-
         let out_arr = lib._malloc(out_length);
         let ret = lib.ccall('mecab_sparse_tostr3', 'number', ['number', 'string', 'number', 'number', 'number'],
                                  [instance, str, lib.lengthBytesUTF8(str)+1, out_arr, out_length]);
