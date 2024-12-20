@@ -1,12 +1,8 @@
 import LoadMecab from "https://dk470.github.io/kcmecab/mecab.module.js";
 
-// Modify the locateFile function to use hosted URLsimport LoadMecab from "https://dk470.github.io/kcmecab/mecab.module.js";
-
-// Modify the locateFile function to use hosted URLs for both wasm and data
 function locateFile(fn) {
     if (fn === 'libmecab.data') {
-        // If you're using a data file, load it from GitHub or another server
-        return 'https://dk470.github.io/kcmecab/libmecab.data'; // Correct URL to the hosted data file
+           return 'https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data'; 
     }
     if (fn === 'libmecab.wasm') {
         // Load the WASM file from GitHub (or another remote location)
