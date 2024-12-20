@@ -31,7 +31,6 @@ libPromise.then((loadedLib) => {
 });
 
 
-// Mecab class for interacting with the library
 class Mecab {
     static async waitReady() {
         // Ensure that the library is fully loaded and ready
@@ -57,7 +56,8 @@ class Mecab {
         ret = lib.UTF8ToString(ret); // Convert result to a readable string
         lib._free(outArr);
 
-        if (!ret) {            
+        if (!ret) {
+            console.error(`Mecab failed for input string: "${str}"`);
             return [];
         }
 
