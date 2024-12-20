@@ -10,9 +10,10 @@ function locateFile(fn) {
         return fn;  // Return the default file if it's neither of the two
     }
 
-    console.log(`Loading ${fn} from: ${url}`);
-    return url;  // Ensure the correct URL is returned
+    console.log(`Resolving ${fn} to: ${url}`);
+    return url;  // Return the URL to fetch the file
 }
+
 
 
 var lib;
