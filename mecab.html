@@ -1,42 +1,28 @@
 <!doctype html>
 <html>
-    <head>
-        <script type="module">
-            import Mecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/mecab.js";
+<head>
+    <script type="module">
+        import Mecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/mecab.js";
 
-            let isMecabReady = false;
+        document.addEventListener('DOMContentLoaded', init);
 
-            // Wait for Mecab to initialize
-            async function initializeMecab() {
-                try {
-                    await Mecab.waitReady(); // Wait until Mecab is ready
-                    console.log("MeCab is ready.");
-                    isMecabReady = true; // Set flag to indicate Mecab is ready
-                    document.getElementById('button').disabled = false; // Enable the button
-                } catch (error) {
-                    console.error("Error initializing MeCab:", error);
-                    alert("Failed to initialize MeCab.");
-                }
-            }
+        async function init() {
+            try {
+                showProgressBar();
+                setupEventListeners();
 
-            document.addEventListener('DOMContentLoaded', async () => {
-                await initializeMecab(); // Ensure MeCab is initialized first
-                setupEventListeners(); // Set up the rest of the event listeners
-            });
-
-            async function setupEventListeners() {
+                // Set up button event listener to run Mecab query when the button is clicked
                 document.getElementById('button').addEventListener('click', async () => {
                     let inputText = document.getElementById('in').value;
                     if (inputText) {
-                        if (!isMecabReady) {
-                            alert("MeCab is not ready yet. Please wait.");
-                            return;
-                        }
                         try {
                             const response = await fetch(`https://dk470.github.io/kcmecab/mecab.html?text=${encodeURIComponent(inputText)}`);
                             const htmlText = await response.text();
+                            console.log("Raw MeCab Response:", htmlText); // Log the raw HTML response
+
                             const result = parseMecabHtmlResponse(htmlText);  // Extract MeCab results from HTML
-                            console.log("MeCab Results:", result);
+                            console.log("Parsed MeCab Results:", result); // Log the parsed results
+
                             displayResults(result);  // Call your function to display results
                         } catch (err) {
                             console.error("Error during API request:", err);
@@ -46,49 +32,78 @@
                         alert("Please enter text to analyze.");
                     }
                 });
+            } catch (error) {
+                console.error("Initialization failed", error);
+            } finally {
+                hideProgressBar();
+            }
+        }
+
+        function parseMecabHtmlResponse(htmlText) {
+            // Extract MeCab results from HTML and return as a JSON object
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlText;
+
+            try {
+                console.log("Attempting to parse HTML response...");
+                // Log the HTML content to see what we're trying to parse
+                console.log("HTML Content:", tempDiv.textContent.trim());
+
+                // Parse the body content (which is a JSON string) and convert it into an object
+                const jsonResponse = JSON.parse(tempDiv.textContent.trim());
+                return jsonResponse;
+            } catch (e) {
+                console.error("Failed to parse MeCab response:", e);
+                console.error("Raw response text:", htmlText); // Log the raw HTML when parsing fails
+                return { error: "Failed to parse MeCab results" };
+            }
+        }
+
+        // Function to set up event listener for analyzing text
+        function setupEventListeners() {
+            // Your event listener code here, already added above
+        }
+
+        function displayResults(result) {
+            const outputContainer = document.getElementById('output');
+            outputContainer.innerHTML = ''; // Clear previous output
+
+            if (result.error) {
+                outputContainer.innerHTML = `<p>Error: ${result.error}</p>`;
+                return;
             }
 
-            function parseMecabHtmlResponse(htmlText) {
-                // Extract MeCab results from HTML and return as a JSON object
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = htmlText;
+            console.log("Displaying results...");
+            result.forEach(item => {
+                console.log(`Result item:`, item); // Log each item in the result
 
-                try {
-                    // Parse the body content (which is a JSON string) and convert it into an object
-                    const jsonResponse = JSON.parse(tempDiv.textContent.trim());
-                    return jsonResponse;
-                } catch (e) {
-                    console.error("Failed to parse MeCab response:", e);
-                    return { error: "Failed to parse MeCab results" };
-                }
-            }
-
-            // Sample text button event listener
-            const sampleTextBtn = document.getElementById("sampleTextBtn");
-            sampleTextBtn.addEventListener("click", function () {
-                const sampleText = "私は昨日友達と映画を見に行きました。";
-                document.getElementById("in").value = sampleText;
-                const analyzeButton = document.getElementById('button');
-                analyzeButton.disabled = false;
+                // Assuming the result has words or other data to display
+                const resultItem = document.createElement('div');
+                resultItem.textContent = `${item.word} - ${item.reading}`;
+                outputContainer.appendChild(resultItem);
             });
+        }
 
-            // Function to display results
-            function displayResults(result) {
-                const outputContainer = document.getElementById('output');
-                outputContainer.innerHTML = ''; // Clear previous output
-                // Process the result and display it
-                if (result.error) {
-                    outputContainer.innerHTML = `Error: ${result.error}`;
-                } else {
-                    outputContainer.innerHTML = JSON.stringify(result, null, 2);
-                }
+        // Mock showProgressBar and hideProgressBar functions
+        function showProgressBar() {
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) {
+                progressBar.style.display = 'block';
             }
-        </script>
-    </head>
-    <body>
-        <input type="text" id="in" />
-        <button id="button" disabled>Analyze</button>
-        <button id="sampleTextBtn">Sample Text</button>
-        <div id="output"></div>
-    </body>
+        }
+
+        function hideProgressBar() {
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) {
+                progressBar.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="in" />
+    <button id="button">Analyze</button>
+    <div id="output"></div>
+    <div id="progressBar" style="display: none;">Loading...</div> <!-- Progress bar element -->
+</body>
 </html>
