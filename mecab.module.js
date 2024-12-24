@@ -1,4 +1,4 @@
-import LoadMecab from "file:///android_asset/libmecab.js";
+import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.2/lib/libmecab.js";
 
 // Efficient file locator
 function locateFile(fn) {
