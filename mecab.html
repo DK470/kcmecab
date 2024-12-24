@@ -4,43 +4,86 @@
         <script type="module">
             import Mecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/mecab.js";
 
-            // Initialize Mecab
+            let isMecabReady = false;
+
+            // Wait for Mecab to initialize
             async function initializeMecab() {
                 try {
                     await Mecab.waitReady(); // Wait until Mecab is ready
                     console.log("MeCab is ready.");
+                    isMecabReady = true; // Set flag to indicate Mecab is ready
                 } catch (error) {
                     console.error("Error initializing MeCab:", error);
                     alert("Failed to initialize MeCab.");
                 }
             }
 
-            // Query handler to send text and get results
-            async function handleQuery(inputText) {
-                if (inputText) {
-                    try {
-                        const result = await Mecab.query(inputText); // Query Mecab
-                        console.log("MeCab query result:", result);
-                        document.body.innerHTML = JSON.stringify(result); // Display result on the page
-                    } catch (error) {
-                        console.error("Error querying MeCab:", error);
-                        document.body.innerHTML = "Error querying MeCab: " + error.message;
+            document.addEventListener('DOMContentLoaded', async () => {
+                await initializeMecab(); // Ensure MeCab is initialized first
+                setupEventListeners(); // Set up the rest of the event listeners
+            });
+
+            async function setupEventListeners() {
+                document.getElementById('button').addEventListener('click', async () => {
+                    let inputText = document.getElementById('in').value;
+                    if (inputText) {
+                        if (!isMecabReady) {
+                            alert("MeCab is not ready yet. Please wait.");
+                            return;
+                        }
+                        try {
+                            const response = await fetch(`https://dk470.github.io/kcmecab/mecab.html?text=${encodeURIComponent(inputText)}`);
+                            const htmlText = await response.text();
+                            const result = parseMecabHtmlResponse(htmlText);  // Extract MeCab results from HTML
+                            console.log("MeCab Results:", result);
+                            displayResults(result);  // Call your function to display results
+                        } catch (err) {
+                            console.error("Error during API request:", err);
+                            alert("Failed to fetch results.");
+                        }
+                    } else {
+                        alert("Please enter text to analyze.");
                     }
-                } else {
-                    document.body.innerHTML = JSON.stringify({ error: "No text provided" });
+                });
+            }
+
+            function parseMecabHtmlResponse(htmlText) {
+                // Extract MeCab results from HTML and return as a JSON object
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlText;
+
+                try {
+                    // Parse the body content (which is a JSON string) and convert it into an object
+                    const jsonResponse = JSON.parse(tempDiv.textContent.trim());
+                    return jsonResponse;
+                } catch (e) {
+                    console.error("Failed to parse MeCab response:", e);
+                    return { error: "Failed to parse MeCab results" };
                 }
             }
 
-            // Event listener to trigger Mecab query when page is loaded
-            window.addEventListener("load", async () => {
-                await initializeMecab(); // Ensure MeCab is initialized first
-                const params = new URLSearchParams(window.location.search);
-                const inputText = params.get("text");
-                handleQuery(inputText); // Handle query with the provided text parameter
+            // Sample text button event listener
+            const sampleTextBtn = document.getElementById("sampleTextBtn");
+            sampleTextBtn.addEventListener("click", function () {
+                const sampleText = "私は昨日友達と映画を見に行きました。";
+                document.getElementById("in").value = sampleText;
+                const analyzeButton = document.getElementById('button');
+                analyzeButton.disabled = false;
             });
+
+            // Function to display results
+            function displayResults(result) {
+                const outputContainer = document.getElementById('output');
+                outputContainer.innerHTML = ''; // Clear previous output
+                // Continue with your result processing logic here
+            }
+
         </script>
     </head>
     <body>
-        <!-- Your content here -->
+        <input type="text" id="in" />
+        <button id="button" disabled>Analyze</button>
+        <button id="sampleTextBtn">Sample Text</button>
+        <div id="output"></div>
     </body>
 </html>
