@@ -17,16 +17,32 @@
         <script type="module">
             import Mecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/mecab.js";
 
-            function init() {
-                document.getElementById('button').addEventListener('click', function() {
-                    let text = document.getElementById('in').value;
-                    let result = Mecab.query(text);
-                    document.getElementById('out').value = JSON.stringify(result, null, 2);
+            // Function to analyze text and update the output
+            function analyzeText(inputText) {
+                return Mecab.query(inputText).then(result => {
+                    const resultJson = JSON.stringify(result, null, 2);
+                    document.getElementById('out').value = resultJson;
+                    return resultJson;
                 });
-            }
+            }          
+            window.appInterface = {
+                setInput: function (text) {
+                    document.getElementById('in').value = text;
+                },
+                analyzeAndReturn: async function () {
+                    const text = document.getElementById('in').value;
+                    return await analyzeText(text);
+                },
+                getResult: function () {
+                    return document.getElementById('out').value;
+                }
+            };
 
-            window.addEventListener('load', function() {
-                Mecab.waitReady().then(init);
+            // Initialize MeCab
+            window.addEventListener('load', function () {
+                Mecab.waitReady().then(() => {
+                    console.log("MeCab is ready!");
+                });
             });
         </script>
     </head>
@@ -34,11 +50,11 @@
         <div id="container">
             <div>
                 <textarea id="in"></textarea>
-                <button id="button">Analyze</button>
+                <button id="button" onclick="analyzeText(document.getElementById('in').value)">Analyze</button>
             </div>
             <div>
                 <textarea id="out"></textarea>
             </div>
-        <div>
+        </div>
     </body>
 </html>
