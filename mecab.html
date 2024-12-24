@@ -1,60 +1,29 @@
 <!doctype html>
 <html>
     <head>
-        <style type="text/css">
-            #container {
-                width: 40%;
-                margin: 0 auto;
-            }
-            textarea {
-                width: 100%;
-                display: block;
-                margin: 10px 0;
-            }
-            #in { height: 3em; }
-            #out { height: 15em; }
-        </style>
         <script type="module">
             import Mecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/mecab.js";
 
-            // Function to analyze text and update the output
-            function analyzeText(inputText) {
-                return Mecab.query(inputText).then(result => {
-                    const resultJson = JSON.stringify(result, null, 2);
-                    document.getElementById('out').value = resultJson;
-                    return resultJson;
-                });
-            }          
-            window.appInterface = {
-                setInput: function (text) {
-                    document.getElementById('in').value = text;
-                },
-                analyzeAndReturn: async function () {
-                    const text = document.getElementById('in').value;
-                    return await analyzeText(text);
-                },
-                getResult: function () {
-                    return document.getElementById('out').value;
-                }
-            };
+            async function handleQuery() {
+                const params = new URLSearchParams(window.location.search);
+                const inputText = params.get("text"); // Accept text via the `text` query parameter
 
-            // Initialize MeCab
-            window.addEventListener('load', function () {
-                Mecab.waitReady().then(() => {
-                    console.log("MeCab is ready!");
-                });
+                if (inputText) {
+                    const result = await Mecab.query(inputText);
+                    document.body.innerHTML = JSON.stringify(result); // Output JSON response
+                } else {
+                    document.body.innerHTML = JSON.stringify({ error: "No text provided" });
+                }
+            }
+
+            // Initialize MeCab and process query
+            window.addEventListener("load", async () => {
+                await Mecab.waitReady();
+                await handleQuery();
             });
         </script>
     </head>
     <body>
-        <div id="container">
-            <div>
-                <textarea id="in"></textarea>
-                <button id="button" onclick="analyzeText(document.getElementById('in').value)">Analyze</button>
-            </div>
-            <div>
-                <textarea id="out"></textarea>
-            </div>
-        </div>
+        <!-- Output will appear here -->
     </body>
 </html>
