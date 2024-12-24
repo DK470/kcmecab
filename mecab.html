@@ -8,7 +8,6 @@
                 try {
                     await Mecab.waitReady();
                     console.log("MeCab is ready.");
-                    await handleQuery();
                 } catch (error) {
                     console.error("Error initializing MeCab:", error);
                     alert("Failed to initialize MeCab.");
@@ -21,7 +20,9 @@
 
                 if (inputText) {
                     try {
-                        const result = await Mecab.query(inputText);
+                        const response = await fetch(`https://dk470.github.io/kcmecab/mecab.html?text=${encodeURIComponent(inputText)}`);
+                        const htmlText = await response.text();
+                        const result = parseMecabHtmlResponse(htmlText);  // Extract MeCab results from HTML
                         console.log("MeCab query result:", result);
                         document.body.innerHTML = JSON.stringify(result);
                     } catch (error) {
@@ -29,6 +30,21 @@
                     }
                 } else {
                     document.body.innerHTML = JSON.stringify({ error: "No text provided" });
+                }
+            }
+
+            function parseMecabHtmlResponse(htmlText) {
+                // Extract MeCab results from HTML and return as a JSON object
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlText;
+
+                try {
+                    // Parse the body content (which is a JSON string) and convert it into an object
+                    const jsonResponse = JSON.parse(tempDiv.textContent.trim());
+                    return jsonResponse;
+                } catch (e) {
+                    console.error("Failed to parse MeCab response:", e);
+                    return { error: "Failed to parse MeCab results" };
                 }
             }
 
