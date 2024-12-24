@@ -4,26 +4,38 @@
         <script type="module">
             import Mecab from "https://unpkg.com/mecab-wasm@1.0.3/lib/mecab.js";
 
+            async function initializeMecab() {
+                try {
+                    await Mecab.waitReady();
+                    console.log("MeCab is ready.");
+                    await handleQuery();
+                } catch (error) {
+                    console.error("Error initializing MeCab:", error);
+                    alert("Failed to initialize MeCab.");
+                }
+            }
+
             async function handleQuery() {
                 const params = new URLSearchParams(window.location.search);
-                const inputText = params.get("text"); // Accept text via the `text` query parameter
+                const inputText = params.get("text");
 
                 if (inputText) {
-                    const result = await Mecab.query(inputText);
-                    document.body.innerHTML = JSON.stringify(result); // Output JSON response
+                    try {
+                        const result = await Mecab.query(inputText);
+                        console.log("MeCab query result:", result);
+                        document.body.innerHTML = JSON.stringify(result);
+                    } catch (error) {
+                        document.body.innerHTML = "Error querying MeCab: " + error.message;
+                    }
                 } else {
                     document.body.innerHTML = JSON.stringify({ error: "No text provided" });
                 }
             }
 
-            // Initialize MeCab and process query
-            window.addEventListener("load", async () => {
-                await Mecab.waitReady();
-                await handleQuery();
-            });
+            window.addEventListener("load", initializeMecab);
         </script>
     </head>
     <body>
-        <!-- Output will appear here -->
+        <!-- Your content here -->
     </body>
 </html>
