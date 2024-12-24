@@ -12,6 +12,7 @@
                     await Mecab.waitReady(); // Wait until Mecab is ready
                     console.log("MeCab is ready.");
                     isMecabReady = true; // Set flag to indicate Mecab is ready
+                    document.getElementById('button').disabled = false; // Enable the button
                 } catch (error) {
                     console.error("Error initializing MeCab:", error);
                     alert("Failed to initialize MeCab.");
@@ -75,9 +76,13 @@
             function displayResults(result) {
                 const outputContainer = document.getElementById('output');
                 outputContainer.innerHTML = ''; // Clear previous output
-                // Continue with your result processing logic here
+                // Process the result and display it
+                if (result.error) {
+                    outputContainer.innerHTML = `Error: ${result.error}`;
+                } else {
+                    outputContainer.innerHTML = JSON.stringify(result, null, 2);
+                }
             }
-
         </script>
     </head>
     <body>
