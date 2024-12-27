@@ -41,58 +41,48 @@ class Mecab {
     }
 
     static query(str) {
-    if (!instance) {
-        throw new Error('Mecab not ready');
+        if (!instance) {
+            throw new Error('Mecab not ready');
+        }
+
+        let outLength = str.length * 128; // Estimate size for the output buffer
+        let outArr = lib._malloc(outLength);
+        // Call the Mecab parsing function
+        let ret = lib.ccall(
+            'mecab_sparse_tostr3', 'number', 
+            ['number', 'string', 'number', 'number', 'number'], 
+            [instance, str, lib.lengthBytesUTF8(str) + 1, outArr, outLength]
+        );
+        ret = lib.UTF8ToString(ret); // Convert result to a readable string
+        lib._free(outArr);
+
+        if (!ret) {
+            console.error(`Mecab failed for input string: "${str}"`);
+            return [];
+        }
+
+        // Process the output into a structured format
+        let result = ret.split('\n').map(line => {
+            const sp = line.split('\t');
+            if (sp.length !== 2) return null;
+            const [word, fieldStr] = sp;
+            const fields = fieldStr.split(',');
+            return fields.length === 9 ? {
+                word,
+                pos: fields[0],
+                pos_detail1: fields[1],
+                pos_detail2: fields[2],
+                pos_detail3: fields[3],
+                conjugation1: fields[4],
+                conjugation2: fields[5],
+                dictionary_form: fields[6],
+                reading: fields[7],
+                pronunciation: fields[8]
+            } : null;
+        }).filter(Boolean);
+
+        return result;
     }
-
-    // Preprocess the text to ensure numbers and symbols are treated correctly
-    const preprocessedText = preprocessText(str);
-
-    let outLength = preprocessedText.length * 128; // Estimate size for the output buffer
-    let outArr = lib._malloc(outLength);
-    
-    // Call the Mecab parsing function with the preprocessed text
-    let ret = lib.ccall(
-        'mecab_sparse_tostr3', 'number', 
-        ['number', 'string', 'number', 'number', 'number'], 
-        [instance, preprocessedText, lib.lengthBytesUTF8(preprocessedText) + 1, outArr, outLength]
-    );
-    ret = lib.UTF8ToString(ret); // Convert result to a readable string
-    lib._free(outArr);
-
-    if (!ret) {
-        console.error(Mecab failed for input string: "${preprocessedText}");
-        return [];
-    }
-
-    // Process the output into a structured format
-    let result = ret.split('\n').map(line => {
-        const sp = line.split('\t');
-        if (sp.length !== 2) return null;
-        const [word, fieldStr] = sp;
-        const fields = fieldStr.split(',');
-        return fields.length === 9 ? {
-            word,
-            pos: fields[0],
-            pos_detail1: fields[1],
-            pos_detail2: fields[2],
-            pos_detail3: fields[3],
-            conjugation1: fields[4],
-            conjugation2: fields[5],
-            dictionary_form: fields[6],
-            reading: fields[7],
-            pronunciation: fields[8]
-        } : null;
-    }).filter(Boolean);
-
-    return result;
 }
-
-// Preprocess function to handle numbers and symbols
-function preprocessText(input) {
-    // Ensure numbers and symbols are isolated to avoid being skipped
-    return input.replace(/([0-9!-/:-@[-{-~])/g, ' $1 '); // Add spaces around numbers/symbols
-}
-
 
 export default Mecab;
