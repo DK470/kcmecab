@@ -41,28 +41,46 @@ class Mecab {
     }
 
     static query(str) {
-        if (!instance) {
-            throw new Error('Mecab not ready');
+    if (!instance) {
+        throw new Error('Mecab not ready');
+    }
+
+    // Split input into Japanese and non-Japanese segments
+    const segments = str.split(/([a-zA-Z\-.,!?"';:()\s]+)/).filter(segment => segment.trim() !== '');
+
+    let results = [];
+    for (const segment of segments) {
+        if (/^[a-zA-Z\-.,!?"';:()\s]+$/.test(segment)) {
+            // English or non-Japanese segment, add it directly to results
+            results.push({
+                word: segment,
+                pos: 'foreign',
+                dictionary_form: segment,
+                reading: null,
+                pronunciation: null
+            });
+            console.log(`Skipped Mecab for English word: "${segment}"`);
+            continue;
         }
 
-        let outLength = str.length * 128; // Estimate size for the output buffer
+        // Process Japanese segment with MeCab
+        let outLength = segment.length * 128; // Estimate size for the output buffer
         let outArr = lib._malloc(outLength);
-        // Call the Mecab parsing function
         let ret = lib.ccall(
-            'mecab_sparse_tostr3', 'number', 
-            ['number', 'string', 'number', 'number', 'number'], 
-            [instance, str, lib.lengthBytesUTF8(str) + 1, outArr, outLength]
+            'mecab_sparse_tostr3', 'number',
+            ['number', 'string', 'number', 'number', 'number'],
+            [instance, segment, lib.lengthBytesUTF8(segment) + 1, outArr, outLength]
         );
-        ret = lib.UTF8ToString(ret); // Convert result to a readable string
+        ret = lib.UTF8ToString(ret);
         lib._free(outArr);
 
         if (!ret) {
-            console.error(`Mecab failed for input string: "${str}"`);
-            return [];
+            console.error(`Mecab failed for input segment: "${segment}"`);
+            continue;
         }
 
-        // Process the output into a structured format
-        let result = ret.split('\n').map(line => {
+        // Parse Mecab output and merge results
+        const parsedSegment = ret.split('\n').map(line => {
             const sp = line.split('\t');
             if (sp.length !== 2) return null;
             const [word, fieldStr] = sp;
@@ -81,8 +99,10 @@ class Mecab {
             } : null;
         }).filter(Boolean);
 
-        return result;
+        results = results.concat(parsedSegment);
     }
+
+    return results;
 }
 
 export default Mecab;
