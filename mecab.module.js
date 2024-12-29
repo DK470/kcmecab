@@ -57,7 +57,7 @@ class Mecab {
         lib._free(outArr);
 
         if (!ret) {
-            console.error(Mecab failed for input string: "${str}");
+            console.error(`Mecab failed for input string: "${str}"`);
             return [];
         }
 
