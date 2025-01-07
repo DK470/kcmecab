@@ -32,9 +32,7 @@ libPromise.then((loadedLib) => {
 
 class Mecab {
     static async waitReady() {
-        // Ensure that the library is fully loaded and ready
         await libPromise;
-        // Trigger an event once Mecab is loaded
         const event = new CustomEvent('mecabLoaded');
         document.dispatchEvent(event);
     }
@@ -44,15 +42,14 @@ class Mecab {
             throw new Error('Mecab not ready');
         }
 
-        let outLength = str.length * 128; // Estimate size for the output buffer
+        let outLength = str.length * 128;
         let outArr = lib._malloc(outLength);
-        // Call the Mecab parsing function
         let ret = lib.ccall(
-            'mecab_sparse_tostr3', 'number', 
-            ['number', 'string', 'number', 'number', 'number'], 
+            'mecab_sparse_tostr3', 'number',
+            ['number', 'string', 'number', 'number', 'number'],
             [instance, str, lib.lengthBytesUTF8(str) + 1, outArr, outLength]
         );
-        ret = lib.UTF8ToString(ret); // Convert result to a readable string
+        ret = lib.UTF8ToString(ret);
         lib._free(outArr);
 
         if (!ret) {
@@ -60,26 +57,29 @@ class Mecab {
             return [];
         }
 
-        // Process the output into a structured format
         let result = [];
         let lines = ret.split('\n');
 
         for (let line of lines) {
             if (!line) continue;
+
             const sp = line.split('\t');
-            
+
             if (sp.length !== 2) {
-    const skippedWord = sp[0];
-    if (/^[A-Za-z]+$/.test(skippedWord)) {
-        result.push({
-            word: skippedWord,
-            pos: "SKIPPED",
-            reading: skippedWord,
-            pronunciation: skippedWord
-        });
-    }
-    continue;
-}
+                const skippedWord = sp[0];
+
+                // Check if the word consists only of English characters
+                if (/^[A-Za-z]+$/.test(skippedWord)) {
+                    result.push({
+                        word: skippedWord,
+                        pos: "SKIPPED",  // You can customize this further as needed
+                        reading: skippedWord,
+                        pronunciation: skippedWord
+                    });
+                }
+                continue;
+            }
+
             const [word, fieldStr] = sp;
             const fields = fieldStr.split(',');
 
@@ -104,3 +104,4 @@ class Mecab {
 }
 
 export default Mecab;
+
