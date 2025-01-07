@@ -54,10 +54,11 @@ class Mecab {
 
         if (!ret) {
             console.error(`Mecab failed for input string: "${str}"`);
-            return [];
+            return { recognized: [], unrecognized: [str] }; // Return the original input as unrecognized
         }
 
         let result = [];
+        let unrecognizedWords = [];
         let lines = ret.split('\n');
 
         for (let line of lines) {
@@ -76,6 +77,8 @@ class Mecab {
                         reading: skippedWord,
                         pronunciation: skippedWord
                     });
+                } else {
+                    unrecognizedWords.push(skippedWord); // Add to unrecognized words
                 }
                 continue;
             }
@@ -99,9 +102,8 @@ class Mecab {
             }
         }
 
-        return result;
+        return { recognized: result, unrecognized: unrecognizedWords };
     }
 }
 
 export default Mecab;
-
