@@ -65,14 +65,16 @@ class Mecab {
 
             for (let line of lines) {
                 if (!line) continue;
-
-                const sp = line.split('\t');
-                console.log("Parsed line:", sp);
-
-                if (sp.length !== 2) {
-                    console.log("Skipping line (incorrect format):", sp);
-                    const skippedWord = line.split(',')[0];
-
+            
+                const sp = line.includes(',') ? line.split(',') : line.split('\t');  // Check for commas first, fall back to tabs
+                console.log("Parsed line:", sp); // Log the parsed line
+            
+                // If the line doesn't have exactly 2 parts (word + fields), it might be a malformed line
+                if (sp.length < 2) {
+                    console.log("Skipping invalid line format:", sp);
+                    const skippedWord = sp[0];
+            
+                    // If word is English, treat as skipped
                     if (/^[A-Za-z]+$/.test(skippedWord)) {
                         result.push({
                             word: skippedWord,
@@ -81,14 +83,14 @@ class Mecab {
                             pronunciation: skippedWord
                         });
                     } else {
-                        unrecognizedWords.push(skippedWord);
+                        unrecognizedWords.push(skippedWord); // Add non-English word to unrecognized
                     }
                     continue;
                 }
-
+            
                 const [word, fieldStr] = sp;
                 const fields = fieldStr.split(',');
-
+            
                 if (fields.length === 9) {
                     result.push({
                         word,
@@ -106,6 +108,7 @@ class Mecab {
                     console.log(`Skipping invalid line format: ${line}`);
                 }
             }
+
 
             resolve({ recognized: result, unrecognized: unrecognizedWords });
         });
