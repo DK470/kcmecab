@@ -67,22 +67,25 @@ class Mecab {
             for (let line of lines) {
                 if (!line) continue;
 
-                const sp = line.includes(',') ? line.split(',') : line.split('\t');  // Check for commas first, fall back to tabs
+                // Try splitting by both commas and tabs
+                const sp = line.includes(',') ? line.split(',') : line.split('\t');
                 console.log("Parsed line:", sp); // Log the parsed line
 
-                // Process all lines, including malformed ones
+                // Skip lines with fewer than 2 fields
                 if (sp.length < 2 || sp[0].trim() === '') {
                     console.log("Malformed line detected:", sp);  // Log or flag malformed lines
                     malformedLines.push(line);  // Keep track of malformed lines
+                    continue;  // Process as malformed but don't skip entirely
                 }
 
                 const [word, fieldStr] = sp;
                 const fields = fieldStr.split(',');
 
-                // If the fields don't match the expected number, log it as malformed but still process it
+                // Validate number of fields (9 fields expected)
                 if (fields.length !== 9) {
                     console.log(`Malformed line with incorrect number of fields: ${line}`);
                     malformedLines.push(line);  // Collect malformed lines here as well
+                    // Continue processing, possibly filling in missing fields
                 }
 
                 // Process the line as a regular word entry even if it's malformed
