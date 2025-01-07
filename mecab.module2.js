@@ -22,7 +22,7 @@ libPromise.then((loadedLib) => {
     lib = loadedLib;
     // Initialize Mecab instance after loading
     instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
-    console.log("Mecab has been successfully initialized!");
+    console.log("Mecab has been successfully initialized! Instance:", instance);
 
     // Dispatch a custom event to signal completion
     document.dispatchEvent(new CustomEvent('mecabReady'));
@@ -44,6 +44,8 @@ class Mecab {
                 return;
             }
 
+            console.log("Processing string:", str); // Log the string being passed to MeCab
+
             let outLength = str.length * 128;
             let outArr = lib._malloc(outLength);
             let ret = lib.ccall(
@@ -57,7 +59,10 @@ class Mecab {
             if (!ret) {
                 console.error(`Mecab failed for input string: "${str}"`);
                 resolve({ recognized: [], unrecognized: [str] }); // Return the original input as unrecognized
+                return;
             }
+
+            console.log("Mecab Result:", ret); // Log the raw result from MeCab
 
             let result = [];
             let unrecognizedWords = [];
@@ -67,8 +72,10 @@ class Mecab {
                 if (!line) continue;
 
                 const sp = line.split('\t');
+                console.log("Parsed line:", sp); // Log the parsed line
 
                 if (sp.length !== 2) {
+                    console.log("Skipping line (incorrect format):", sp);
                     const skippedWord = sp[0];
 
                     // Check if the word consists only of English characters
