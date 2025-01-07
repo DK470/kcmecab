@@ -69,19 +69,17 @@ class Mecab {
             const sp = line.split('\t');
             
             if (sp.length !== 2) {
-                // Handle skipped words (e.g., English words)
-                const skippedWord = sp[0];
-                if (/^[A-Za-z]+$/.test(skippedWord)) {
-                    result.push({
-                        word: skippedWord,
-                        pos: "SKIPPED",
-                        reading: skippedWord,
-                        pronunciation: skippedWord
-                    });
-                }
-                continue;
-            }
-
+    const skippedWord = sp[0];
+    if (/^[A-Za-z]+$/.test(skippedWord)) {
+        result.push({
+            word: skippedWord,
+            pos: "SKIPPED",
+            reading: skippedWord,
+            pronunciation: skippedWord
+        });
+    }
+    continue;
+}
             const [word, fieldStr] = sp;
             const fields = fieldStr.split(',');
 
