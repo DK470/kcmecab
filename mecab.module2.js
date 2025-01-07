@@ -2,14 +2,13 @@ import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.2/lib/libmecab.js";
 
 // Efficient file locator
 function locateFile(fn) {
-    // Handle the wasm and data file paths separately
     switch(fn) {
         case 'libmecab.data':
-            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data";  // Online libmecab.data file
+            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data";
         case 'libmecab.wasm':
-            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.wasm";  // Local path for wasm file
+            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.wasm";
         default:
-            return null; // Fallback for other files if necessary
+            return null;
     }
 }
 
@@ -17,14 +16,11 @@ let lib;
 let instance;
 let libPromise = LoadMecab({ locateFile });
 
-// Ensure Mecab is ready asynchronously
 libPromise.then((loadedLib) => {
     lib = loadedLib;
-    // Initialize Mecab instance after loading
     instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
-    console.log("Mecab has been successfully initialized! Instance:", instance);
+    console.log("Mecab initialized! Instance:", instance);
 
-    // Dispatch a custom event to signal completion
     document.dispatchEvent(new CustomEvent('mecabReady'));
 }).catch((error) => {
     console.error("Failed to load Mecab:", error);
@@ -33,8 +29,7 @@ libPromise.then((loadedLib) => {
 class Mecab {
     static async waitReady() {
         await libPromise;
-        const event = new CustomEvent('mecabLoaded');
-        document.dispatchEvent(event);
+        document.dispatchEvent(new CustomEvent('mecabLoaded'));
     }
 
     static query(str) {
@@ -44,7 +39,7 @@ class Mecab {
                 return;
             }
 
-            console.log("Processing string:", str); // Log the string being passed to MeCab
+            console.log("Processing string:", str);
 
             let outLength = str.length * 128;
             let outArr = lib._malloc(outLength);
@@ -57,12 +52,12 @@ class Mecab {
             lib._free(outArr);
 
             if (!ret) {
-                console.error(`Mecab failed for input string: "${str}"`);
-                resolve({ recognized: [], unrecognized: [str] }); // Return the original input as unrecognized
+                console.error(`Mecab failed for input: "${str}"`);
+                resolve({ recognized: [], unrecognized: [str] });
                 return;
             }
 
-            console.log("Mecab Result:", ret); // Log the raw result from MeCab
+            console.log("Mecab Result:", ret);
 
             let result = [];
             let unrecognizedWords = [];
@@ -72,23 +67,21 @@ class Mecab {
                 if (!line) continue;
 
                 const sp = line.split('\t');
-                console.log("Parsed line:", sp); // Log the parsed line
+                console.log("Parsed line:", sp);
 
-                // Skip lines that don't have the correct format (word + tab + info)
                 if (sp.length !== 2) {
                     console.log("Skipping line (incorrect format):", sp);
-                    const skippedWord = sp[0];
+                    const skippedWord = line.split(',')[0];
 
-                    // If word is English, treat as skipped
                     if (/^[A-Za-z]+$/.test(skippedWord)) {
                         result.push({
                             word: skippedWord,
-                            pos: "SKIPPED",  // Mark as skipped
+                            pos: "SKIPPED",
                             reading: skippedWord,
                             pronunciation: skippedWord
                         });
                     } else {
-                        unrecognizedWords.push(skippedWord); // Add non-English word to unrecognized
+                        unrecognizedWords.push(skippedWord);
                     }
                     continue;
                 }
@@ -96,7 +89,6 @@ class Mecab {
                 const [word, fieldStr] = sp;
                 const fields = fieldStr.split(',');
 
-                // Process valid Mecab output
                 if (fields.length === 9) {
                     result.push({
                         word,
@@ -115,7 +107,6 @@ class Mecab {
                 }
             }
 
-            // Resolve with recognized words and unrecognized words
             resolve({ recognized: result, unrecognized: unrecognizedWords });
         });
     }
