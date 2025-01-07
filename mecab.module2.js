@@ -41,13 +41,19 @@ class Mecab {
 
             console.log("Processing string:", str);
 
-            let outLength = str.length * 128;
+            // Estimate output size based on input length
+            const estimatedTokens = Math.ceil(str.length / 3); // Assume 1 token per 3 characters (rough estimate)
+            const outLength = estimatedTokens * 512; // 512 bytes per token (adjustable)
+
+            // Dynamically allocate memory based on the estimated output size
             let outArr = lib._malloc(outLength);
+
             let ret = lib.ccall(
                 'mecab_sparse_tostr3', 'number',
                 ['number', 'string', 'number', 'number', 'number'],
                 [instance, str, lib.lengthBytesUTF8(str) + 1, outArr, outLength]
             );
+
             ret = lib.UTF8ToString(ret);
             lib._free(outArr);
 
