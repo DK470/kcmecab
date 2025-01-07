@@ -2,7 +2,7 @@ import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.2/lib/libmecab.js";
 
 // Efficient file locator
 function locateFile(fn) {
-    switch(fn) {
+    switch (fn) {
         case 'libmecab.data':
             return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data";
         case 'libmecab.wasm':
@@ -14,7 +14,9 @@ function locateFile(fn) {
 
 let lib;
 let instance;
-let libPromise = LoadMecab({ locateFile });
+let libPromise = LoadMecab({
+    locateFile
+});
 
 libPromise.then((loadedLib) => {
     lib = loadedLib;
@@ -53,7 +55,10 @@ class Mecab {
 
             if (!ret) {
                 console.error(`Mecab failed for input: "${str}"`);
-                resolve({ recognized: [], unrecognized: [str] });
+                resolve({
+                    recognized: [],
+                    unrecognized: [str]
+                });
                 return;
             }
 
@@ -66,7 +71,7 @@ class Mecab {
             for (let line of lines) {
                 if (!line) continue;
 
-                const sp = line.includes(',') ? line.split(',') : line.split('\t');  // Check for commas first, fall back to tabs
+                const sp = line.includes(',') ? line.split(',') : line.split('\t'); // Check for commas first, fall back to tabs
                 console.log("Parsed line:", sp); // Log the parsed line
 
                 // Skip empty or invalid lines
@@ -78,7 +83,24 @@ class Mecab {
                 const [word, fieldStr] = sp;
                 const fields = fieldStr.split(',');
 
-                // Handle case where there are exactly 9 fields
+                // Handle punctuation or short words differently
+                if (fields.length < 2 || fields.length === 3) {
+                    // Skip punctuation like '。' and English words like "Hello" if not recognized
+                    if (/^[a-zA-Z]+$/.test(word) || /^[。．！？]/.test(word)) {
+                        result.push({
+                            word,
+                            pos: '記号',
+                            reading: word,
+                            pronunciation: word
+                        });
+                        continue; // Allow this line to be processed
+                    } else {
+                        console.log(`Skipping malformed line (incorrect number of fields): ${line}`);
+                        continue;
+                    }
+                }
+
+                // Handle lines with 9 fields correctly
                 if (fields.length === 9) {
                     result.push({
                         word,
@@ -92,14 +114,16 @@ class Mecab {
                         reading: fields[7],
                         pronunciation: fields[8]
                     });
-                } else {
-                    console.log(`Skipping malformed line (incorrect number of fields): ${line}`);
                 }
             }
 
-            resolve({ recognized: result, unrecognized: unrecognizedWords });
+            resolve({
+                recognized: result,
+                unrecognized: unrecognizedWords
+            });
         });
     }
+
 }
 
 export default Mecab;
