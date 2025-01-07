@@ -61,7 +61,7 @@ class Mecab {
 
             let result = [];
             let unrecognizedWords = [];
-            let malformedLines = []; // Store malformed lines
+            let malformedLines = []; // Store malformed lines for debugging or logging
             let lines = ret.split('\n');
 
             for (let line of lines) {
@@ -70,37 +70,37 @@ class Mecab {
                 const sp = line.includes(',') ? line.split(',') : line.split('\t');  // Check for commas first, fall back to tabs
                 console.log("Parsed line:", sp); // Log the parsed line
 
-                // Store malformed lines for later processing
+                // Process all lines, including malformed ones
                 if (sp.length < 2 || sp[0].trim() === '') {
-                    console.log("Malformed line detected:", sp);
-                    malformedLines.push(line);  // Collect malformed lines
-                    continue;  // You can choose to process these lines differently if needed
+                    console.log("Malformed line detected:", sp);  // Log or flag malformed lines
+                    malformedLines.push(line);  // Keep track of malformed lines
                 }
 
                 const [word, fieldStr] = sp;
                 const fields = fieldStr.split(',');
 
-                // Handle case where there are exactly 9 fields
-                if (fields.length === 9) {
-                    result.push({
-                        word,
-                        pos: fields[0],
-                        pos_detail1: fields[1],
-                        pos_detail2: fields[2],
-                        pos_detail3: fields[3],
-                        conjugation1: fields[4],
-                        conjugation2: fields[5],
-                        dictionary_form: fields[6],
-                        reading: fields[7],
-                        pronunciation: fields[8]
-                    });
-                } else {
+                // If the fields don't match the expected number, log it as malformed but still process it
+                if (fields.length !== 9) {
                     console.log(`Malformed line with incorrect number of fields: ${line}`);
                     malformedLines.push(line);  // Collect malformed lines here as well
                 }
+
+                // Process the line as a regular word entry even if it's malformed
+                result.push({
+                    word,
+                    pos: fields[0] || "Unknown",  // Defaulting to "Unknown" if fields are missing
+                    pos_detail1: fields[1] || "Unknown",
+                    pos_detail2: fields[2] || "Unknown",
+                    pos_detail3: fields[3] || "Unknown",
+                    conjugation1: fields[4] || "Unknown",
+                    conjugation2: fields[5] || "Unknown",
+                    dictionary_form: fields[6] || "Unknown",
+                    reading: fields[7] || "Unknown",
+                    pronunciation: fields[8] || "Unknown"
+                });
             }
 
-            console.log("Malformed Lines:", malformedLines);  // Output all malformed lines for debugging or logging
+            console.log("Malformed Lines:", malformedLines);  // Output all malformed lines for debugging
             resolve({ recognized: result, unrecognized: unrecognizedWords });
         });
     }
