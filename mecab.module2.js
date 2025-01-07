@@ -30,7 +30,6 @@ libPromise.then((loadedLib) => {
     console.error("Failed to load Mecab:", error);
 });
 
-
 class Mecab {
     static async waitReady() {
         // Ensure that the library is fully loaded and ready
@@ -62,24 +61,45 @@ class Mecab {
         }
 
         // Process the output into a structured format
-        let result = ret.split('\n').map(line => {
+        let result = [];
+        let lines = ret.split('\n');
+
+        for (let line of lines) {
+            if (!line) continue;
             const sp = line.split('\t');
-            if (sp.length !== 2) return null;
+            
+            if (sp.length !== 2) {
+                // Handle skipped words (e.g., English words)
+                const skippedWord = sp[0];
+                if (/^[A-Za-z]+$/.test(skippedWord)) {
+                    result.push({
+                        word: skippedWord,
+                        pos: "SKIPPED",
+                        reading: skippedWord,
+                        pronunciation: skippedWord
+                    });
+                }
+                continue;
+            }
+
             const [word, fieldStr] = sp;
             const fields = fieldStr.split(',');
-            return fields.length === 9 ? {
-                word,
-                pos: fields[0],
-                pos_detail1: fields[1],
-                pos_detail2: fields[2],
-                pos_detail3: fields[3],
-                conjugation1: fields[4],
-                conjugation2: fields[5],
-                dictionary_form: fields[6],
-                reading: fields[7],
-                pronunciation: fields[8]
-            } : null;
-        }).filter(Boolean);
+
+            if (fields.length === 9) {
+                result.push({
+                    word,
+                    pos: fields[0],
+                    pos_detail1: fields[1],
+                    pos_detail2: fields[2],
+                    pos_detail3: fields[3],
+                    conjugation1: fields[4],
+                    conjugation2: fields[5],
+                    dictionary_form: fields[6],
+                    reading: fields[7],
+                    pronunciation: fields[8]
+                });
+            }
+        }
 
         return result;
     }
