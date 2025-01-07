@@ -74,20 +74,21 @@ class Mecab {
                 const sp = line.split('\t');
                 console.log("Parsed line:", sp); // Log the parsed line
 
+                // Skip lines that don't have the correct format (word + tab + info)
                 if (sp.length !== 2) {
                     console.log("Skipping line (incorrect format):", sp);
                     const skippedWord = sp[0];
 
-                    // Check if the word consists only of English characters
+                    // If word is English, treat as skipped
                     if (/^[A-Za-z]+$/.test(skippedWord)) {
                         result.push({
                             word: skippedWord,
-                            pos: "SKIPPED",  // You can customize this further as needed
+                            pos: "SKIPPED",  // Mark as skipped
                             reading: skippedWord,
                             pronunciation: skippedWord
                         });
                     } else {
-                        unrecognizedWords.push(skippedWord); // Add to unrecognized words
+                        unrecognizedWords.push(skippedWord); // Add non-English word to unrecognized
                     }
                     continue;
                 }
@@ -95,6 +96,7 @@ class Mecab {
                 const [word, fieldStr] = sp;
                 const fields = fieldStr.split(',');
 
+                // Process valid Mecab output
                 if (fields.length === 9) {
                     result.push({
                         word,
@@ -108,9 +110,12 @@ class Mecab {
                         reading: fields[7],
                         pronunciation: fields[8]
                     });
+                } else {
+                    console.log(`Skipping invalid line format: ${line}`);
                 }
             }
 
+            // Resolve with recognized words and unrecognized words
             resolve({ recognized: result, unrecognized: unrecognizedWords });
         });
     }
