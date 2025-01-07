@@ -67,37 +67,23 @@ class Mecab {
             for (let line of lines) {
                 if (!line) continue;
 
-                // Try splitting by both commas and tabs
-                const sp = line.includes(',') ? line.split(',') : line.split('\t');
-                console.log("Parsed line:", sp); // Log the parsed line
+                const sp = line.split('\t');
+                if (sp.length < 1) continue; // Skip completely malformed lines
 
-                // Skip lines with fewer than 2 fields
-                if (sp.length < 2 || sp[0].trim() === '') {
-                    console.log("Malformed line detected:", sp);  // Log or flag malformed lines
-                    malformedLines.push(line);  // Keep track of malformed lines
-                    continue;  // Process as malformed but don't skip entirely
-                }
-
-                const [word, fieldStr] = sp;
+                const word = sp[0]; // Always take the word, even if fields are missing
+                const fieldStr = sp[1] || ''; // Default to an empty string if fields are missing
                 const fields = fieldStr.split(',');
 
-                // Validate number of fields (9 fields expected)
-                if (fields.length !== 9) {
-                    console.log(`Malformed line with incorrect number of fields: ${line}`);
-                    malformedLines.push(line);  // Collect malformed lines here as well
-                    // Continue processing, possibly filling in missing fields
-                }
-
-                // Process the line as a regular word entry even if it's malformed
+                // Create the result object with default values for missing fields
                 result.push({
                     word,
-                    pos: fields[0] || "Unknown",  // Defaulting to "Unknown" if fields are missing
+                    pos: fields[0] || "Unknown",
                     pos_detail1: fields[1] || "Unknown",
                     pos_detail2: fields[2] || "Unknown",
                     pos_detail3: fields[3] || "Unknown",
                     conjugation1: fields[4] || "Unknown",
                     conjugation2: fields[5] || "Unknown",
-                    dictionary_form: fields[6] || "Unknown",
+                    dictionary_form: fields[6] || word, // Default to the word itself if blank
                     reading: fields[7] || "Unknown",
                     pronunciation: fields[8] || "Unknown"
                 });
