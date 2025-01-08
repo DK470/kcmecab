@@ -1,0 +1,312 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Use 'nomodule' if older environments are targeted -->
+    <script type="module" src="script.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js"></script>
+    <title>Japanese Analyzer</title>
+    <style>
+        /* General body style for better readability */
+        body {
+        background-color: #f8f9fa; /* Light grey background for the body */
+        font-size: 18px; /* Increase base font size */
+        line-height: 1.6; /* Improve line spacing */
+        color: #333; /* Darker text for readability */
+        font-family: 'Roboto', sans-serif; /* Use a more modern sans-serif font */
+        }
+        /* Navbar styling */
+        .navbar {
+        margin-bottom: 20px;
+        background-color: #101311; /* Dark green for the navbar */
+        padding: 15px 30px; /* Add padding for a more balanced navbar */
+        color: white; /* White text for contrast */
+        }
+        /* Card styling for readability */
+        .card {
+        border-radius: 10px;
+        border: 1px solid #ccc; /* Light grey border for the card */
+        }
+        /* Furigana output styling */
+        #furigana-output {
+        display: none; /* Hidden by default */
+        font-size: 1.25rem; /* Responsive font size for accessibility */
+        line-height: 1.7;
+        padding: 20px;
+        background-color: #e0f7fa; /* Light blue background */
+        border-radius: 10px;
+        word-wrap: break-word;
+        font-family: 'Noto Sans JP', sans-serif;
+        max-width: 100%; /* Ensure it stretches to fit the screen */
+        overflow-x: auto; /* Handle overflow with horizontal scroll */
+        color: #2c3e50; /* Darker text color for better contrast */
+        }
+        .highlight {
+        background-color: rgb(253, 255, 115) !important; /* Ensure it's applied */
+        transition: background-color 0.1s ease; /* Smooth transition for better visual experience */
+        }
+        /* Floating word details modal styling */
+        #floating-word-details {
+        position: absolute; /* Enables absolute positioning */
+        display: none; /* Initially hidden */
+        background: white; /* Background color */
+        border: 1px solid #ccc; /* Optional: Add a border */
+        border-radius: 5px; /* Optional: Rounded corners */
+        padding: 10px; /* Optional: Padding inside modal */
+        transition: background-color 0.1s ease;
+        z-index: 1020;/* Ensure it appears above other content */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Optional: Shadow for depth */
+        }
+        /* Focus states for accessibility */
+        #furigana-output:focus {
+        outline: 3px solid #007bff; /* Focus outline */
+        }
+        /* Input and results styling */
+        .form-check-label {
+        margin-left: 10px;
+        font-size: 16px; /* Larger font size for better readability */
+        color: #0056b3; /* Dark blue for better contrast */
+        }
+        .form-check-input {
+        position: relative; /* To position the outline correctly */
+        appearance: none; /* Remove default styling */
+        width: 22px; /* Slightly larger width */
+        height: 22px; /* Slightly larger height */
+        border: 2px solid #007bff; /* Border color */
+        background-color: #fff; /* Background color */
+        transition: all 0.3s ease;
+        border-radius: 4px; /* Rounded corners for the checkbox */
+        cursor: pointer; /* Pointer cursor on hover */
+        }
+        .form-check-input:hover {
+        background-color: #007bff; /* Change background on hover */
+        border-color: #0056b3; /* Darker border color on hover */
+        }
+        .form-check-input:checked {
+        background-color: #007bff; /* Blue background when checked */
+        border-color: #0056b3; /* Darker border when checked */
+        }
+        .result-container {
+        max-width: 800px; /* Wider result container */
+        margin: 0 auto; /* Center align the container */
+        }
+        .result-item {
+        margin-bottom: 15px;
+        padding: 20px; /* Add padding for better spacing */
+        background-color: #ffffff; /* White background for results */
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        font-size: 18px;
+        }
+        /* Button styling for accessibility */
+        .btn {
+        font-size: 18px;
+        padding: 12px 20px; /* Increase padding for a better button size */
+        background-color: #28a745; /* Green for buttons */
+        color: white; /* White text color for contrast */
+        border: none; /* Remove border for buttons */
+        border-radius: 5px; /* Rounded corners for the button */
+        cursor: pointer; /* Pointer cursor on hover */
+        }
+        /* Accessibility - Ensures elements resize well on mobile */
+        @media (max-width: 768px) {
+        #furigana-output {
+        font-size: 18px;
+        }
+        .result-item {
+        font-size: 16px;
+        }
+        .btn {
+        font-size: 16px;
+        padding: 10px 16px;
+        }
+        }
+        /* Button for font size toggle */
+        .font-size-toggle {
+        font-size: 24px;
+        cursor: pointer;
+        }
+        .large-font #furigana-output {
+        font-size: 2rem;
+        }
+        /* Accessibility adjustments for smaller screens */
+        @media (max-width: 768px) {
+        #furigana-output {
+        font-size: 18px;
+        }
+        }
+        /* Footer styling */
+        footer {
+        background-color: #343a40; /* Dark grey for footer */
+        color: white; /* White text color */
+        padding: 20px 0;
+        text-align: center; /* Center align footer content */
+        }
+        footer small {
+        color: #adb5bd; /* Light grey for footer text */
+        }
+        #progress-bar-wrapper {
+        position: fixed;
+        z-index: 1030;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100px; /* Height of the progress bar wrapper */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+        .spinner {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid #007bff; /* Blue color */
+        border-radius: 50%;
+        width: 80px;  /* Set width to fit well inside the wrapper */
+        height: 80px; /* Set height to match the wrapper's height */
+        animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+        from {
+        transform: rotate(0deg);
+        }
+        to {
+        transform: rotate(360deg);
+        }
+        }
+    </style>
+</head>
+<body style="position: relative;">
+<!-- Floating Word Details Modal -->
+<div id="floating-word-details" >
+    <div id="modal-body-content">
+        <!-- Content will be injected here -->
+    </div>
+</div>
+<div id="progress-bar-wrapper" style="display: none; justify-content: center; align-items: center;">
+    <div id="progress-bar">
+        <div class="spinner"></div>
+    </div>
+</div>
+<!-- Main Content -->
+<div class="card shadow-lg">
+    <div class="card-body">
+        <!-- Accordion for Input Section -->
+        <div class="accordion" id="inputAccordion">
+            <!-- Progress Bar -->
+            <!-- Input Section -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="inputHeading">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#inputSection" aria-expanded="true" aria-controls="inputSection">
+                        🔤 Input Text
+                    </button>
+                </h2>
+                <div id="inputSection" class="accordion-collapse collapse show" aria-labelledby="inputHeading" data-bs-parent="#inputAccordion">
+                    <div id="input-area">
+                        <!-- Wrapper for textarea and spinner -->
+                        <div class="textarea-wrapper" style="position: relative;">
+                           <textarea
+                                   id="in"
+                                   class="form-control"
+                                   placeholder="Type or paste Japanese text (e.g., 私は昨日友達と映画を見に行きました。)"
+                                   style="height: 40vh;"
+                                   rows="4"></textarea>
+                        </div>
+                        <button id="sampleTextBtn" class="btn btn-secondary w-100 mt-3">Try Sample Text</button>
+                    </div>
+                </div>
+                <!-- Analyze Button (outside of accordion) -->
+                <div class="my-3">
+                    <button id="button" class="btn btn-primary w-100 mb-4">Analyze</button>
+                </div>
+                <!-- Furigana Output Section -->
+                <div>
+                    <h5 class="mb-3">Furigana Output</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-text-height mx-2" id="font-size-toggle" title="Toggle font size" aria-label="Toggle font size"></i>
+                            <i class="fas fa-volume-up mx-2" id="tts-icon" title="Play Furigana text" aria-label="Play Furigana text"></i>
+                        </div>
+                    </div>
+                    <!-- Furigana Output Area -->
+                    <div id="furigana-output" class="border rounded bg-light p-3 mb-4">
+                        <span data-word="例" onmouseover="showWordDetails(event)">例</span>
+                        <span data-word="えい" onmouseover="showWordDetails(event)">えい</span>
+                        <span data-word="example" onmouseover="showWordDetails(event)">example</span>
+                        <span data-word="another" onmouseover="showWordDetails(event)">another</span>
+                    </div>
+                </div>
+                <!-- Export Button -->
+                <button id="exportButton" class="btn btn-outline-primary w-100 mb-4" >Export Selected to CSV</button>
+                <div id="exportModal" class="modal fade" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true" >
+                    <div class="modal-dialog" >
+                        <div class="modal-content" >
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exportModalLabel">Select Export Format</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Radio buttons for selection -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exportFormat" value="anki" id="exportAnki" checked>
+                                    <label class="form-check-label" for="exportAnki">
+                                        Anki Format
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exportFormat" value="spreadsheet" id="exportSpreadsheet">
+                                    <label class="form-check-label" for="exportSpreadsheet">
+                                        Spreadsheet Format
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="exportCancelButton">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="exportConfirmButton">Export</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Parsed Results Section -->
+                <h5 class="mb-3">Parsed Results</h5>
+                <div class="form-check mb-3">
+                    <input type="checkbox" id="selectAll" class="form-check-input">
+                    <label for="selectAll" class="form-check-label">Select All</label>
+                </div>
+                <!-- Parsed Results Output -->
+                <div id="output" class="result-container">
+                    <!-- Example Result Item -->
+                    <div class="result-item card mb-3 p-3">
+                        <div class="form-check">
+                            <input type="checkbox" id="result-example" class="form-check-input">
+                            <label for="result-example" class="form-check-label">Select</label>
+                        </div>
+                        <div><strong>Word:</strong> <span class="text-primary">Example</span></div>
+                        <div><strong>Part of Speech:</strong> <span class="text-secondary">Noun</span></div>
+                        <div><strong>Reading:</strong> <span class="text-secondary">れい</span></div>
+                        <div><strong>Dictionary Form:</strong> <span class="text-secondary">例</span></div>
+                        <div><strong>Definition:</strong> <span class="text-secondary">Example definition</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer section -->
+<footer class="py-3 bg-dark">
+    <div class="container text-center">
+        <p class="m-0 text-white">© 2024 My SenpAI. All rights reserved.</p>
+    </div>
+</footer>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
