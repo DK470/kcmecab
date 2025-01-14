@@ -15,30 +15,61 @@ async function retryFetch(url, retries = 3, delay = 1000) {
     throw new Error(`Failed to fetch ${url} after ${retries} retries`);
 }
 
-// Efficient file locator with retry
-function locateFile(fn) {
+// Preload and cache required files
+const preloadedFiles = {};
+
+async function preloadFiles() {
     const baseUrl = "https://unpkg.com/mecab-wasm@1.0.3/lib/";
-    const fileMap = {
+    const files = {
         'libmecab.data': `${baseUrl}libmecab.data`,
         'libmecab.wasm': `${baseUrl}libmecab.wasm`,
     };
 
-    return retryFetch(fileMap[fn]);
+    for (const [key, url] of Object.entries(files)) {
+        try {
+            preloadedFiles[key] = await retryFetch(url, 3, 2000);
+            console.log(`Preloaded: ${key}`);
+        } catch (error) {
+            console.error(`Failed to preload ${key}:`, error);
+            throw error;
+        }
+    }
+}
+
+// Efficient file locator
+function locateFile(fn) {
+    if (preloadedFiles[fn]) {
+        return preloadedFiles[fn]; // Return the preloaded URL
+    } else {
+        console.error(`File not preloaded: ${fn}`);
+        throw new Error(`Missing preloaded file: ${fn}`);
+    }
 }
 
 let lib;
 let instance;
-let libPromise = LoadMecab({ locateFile });
 
-libPromise.then((loadedLib) => {
-    lib = loadedLib;
-    instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
-    console.log("Mecab initialized! Instance:", instance);
+(async () => {
+    try {
+        // Preload required files
+        await preloadFiles();
 
-    document.dispatchEvent(new CustomEvent('mecabReady'));
-}).catch((error) => {
-    console.error("Failed to load Mecab:", error);
-});
+        // Load Mecab with preloaded files
+        const libPromise = LoadMecab({ locateFile });
+
+        libPromise.then((loadedLib) => {
+            lib = loadedLib;
+            instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
+            console.log("Mecab initialized! Instance:", instance);
+
+            document.dispatchEvent(new CustomEvent('mecabReady'));
+        }).catch((error) => {
+            console.error("Failed to load Mecab:", error);
+        });
+    } catch (error) {
+        console.error("Error during initialization:", error);
+    }
+})();
 
 class Mecab {
     static async waitReady() {
