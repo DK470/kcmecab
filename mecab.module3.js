@@ -1,41 +1,58 @@
 import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.2/lib/libmecab.js";
 
-// Efficient file locator
-function locateFile(fn) {
-    switch(fn) {
-        case 'libmecab.data':
-            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.data";
-        case 'libmecab.wasm':
-            return "https://unpkg.com/mecab-wasm@1.0.3/lib/libmecab.wasm";
-        default:
-            return null;
+// Retry logic for file loading
+async function retryFetch(url, retries = 3, delay = 1000) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch(url, { method: "HEAD" });
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return url;
+        } catch (error) {
+            console.warn(`Retry ${i + 1}/${retries} failed for ${url}:`, error);
+            if (i < retries - 1) await new Promise(resolve => setTimeout(resolve, delay));
+        }
     }
+    throw new Error(`Failed to fetch ${url} after ${retries} retries`);
+}
+
+// Efficient file locator with retry
+function locateFile(fn) {
+    const baseUrl = "https://unpkg.com/mecab-wasm@1.0.3/lib/";
+    const fileMap = {
+        'libmecab.data': `${baseUrl}libmecab.data`,
+        'libmecab.wasm': `${baseUrl}libmecab.wasm`,
+    };
+
+    return retryFetch(fileMap[fn]);
 }
 
 let lib;
 let instance;
-let libPromise = LoadMecab({ locateFile });
+let libPromise;
 
-libPromise.then((loadedLib) => {
-    lib = loadedLib;
-    instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
-    console.log("Mecab initialized! Instance:", instance);
+// Initialize MeCab asynchronously with retry logic
+libPromise = LoadMecab({ locateFile })
+    .then((loadedLib) => {
+        lib = loadedLib;
+        instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
+        console.log("MeCab initialized! Instance:", instance);
 
-    document.dispatchEvent(new CustomEvent('mecabReady'));
-}).catch((error) => {
-    console.error("Failed to load Mecab:", error);
-});
+        document.dispatchEvent(new CustomEvent('mecabReady'));
+    })
+    .catch((error) => {
+        console.error("Failed to load MeCab:", error);
+    });
 
 class Mecab {
     static async waitReady() {
-        await libPromise;
+        await libPromise; // Ensure library is loaded before proceeding
         document.dispatchEvent(new CustomEvent('mecabLoaded'));
     }
 
     static query(str) {
         return new Promise((resolve, reject) => {
             if (!instance) {
-                reject(new Error('Mecab not ready'));
+                reject(new Error('MeCab not ready'));
                 return;
             }
 
@@ -58,12 +75,12 @@ class Mecab {
             lib._free(outArr);
 
             if (!ret) {
-                console.error(`Mecab failed for input: "${str}"`);
+                console.error(`MeCab failed for input: "${str}"`);
                 resolve({ recognized: [], unrecognized: [str] });
                 return;
             }
 
-            console.log("Mecab Result:", ret);
+            console.log("MeCab Result:", ret);
 
             let result = [];
             let unrecognizedWords = [];
