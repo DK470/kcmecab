@@ -1,87 +1,58 @@
 import LoadMecab from "https://unpkg.com/mecab-wasm@1.0.2/lib/libmecab.js";
 
-// Retry logic for fetching files
+// Retry logic for file loading
 async function retryFetch(url, retries = 3, delay = 1000) {
     for (let i = 0; i < retries; i++) {
         try {
-            const response = await fetch(url);
+            const response = await fetch(url, { method: "HEAD" });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return response.url; // Return the URL on success
+            return url;
         } catch (error) {
             console.warn(`Retry ${i + 1}/${retries} failed for ${url}:`, error);
-            if (i < retries - 1) await new Promise(r => setTimeout(r, delay));
+            if (i < retries - 1) await new Promise(resolve => setTimeout(resolve, delay));
         }
     }
     throw new Error(`Failed to fetch ${url} after ${retries} retries`);
 }
 
-// Preload and cache required files
-const preloadedFiles = {};
-let libPromise; // Define libPromise globally
-let lib;
-let instance;
-
-async function preloadFiles() {
+// Efficient file locator with retry
+function locateFile(fn) {
     const baseUrl = "https://unpkg.com/mecab-wasm@1.0.3/lib/";
-    const files = {
+    const fileMap = {
         'libmecab.data': `${baseUrl}libmecab.data`,
         'libmecab.wasm': `${baseUrl}libmecab.wasm`,
     };
 
-    for (const [key, url] of Object.entries(files)) {
-        try {
-            preloadedFiles[key] = await retryFetch(url, 3, 2000);
-            console.log(`Preloaded: ${key}`);
-        } catch (error) {
-            console.error(`Failed to preload ${key}:`, error);
-            throw error;
-        }
-    }
+    return retryFetch(fileMap[fn]);
 }
 
-// Efficient file locator
-function locateFile(fn) {
-    if (preloadedFiles[fn]) {
-        return preloadedFiles[fn]; // Return the preloaded URL
-    } else {
-        console.error(`File not preloaded: ${fn}`);
-        throw new Error(`Missing preloaded file: ${fn}`);
-    }
-}
+let lib;
+let instance;
+let libPromise;
 
-// Initialize Mecab asynchronously
-(async () => {
-    try {
-        // Preload required files
-        await preloadFiles();
+// Initialize MeCab asynchronously with retry logic
+libPromise = LoadMecab({ locateFile })
+    .then((loadedLib) => {
+        lib = loadedLib;
+        instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
+        console.log("MeCab initialized! Instance:", instance);
 
-        // Initialize Mecab and assign libPromise
-        libPromise = LoadMecab({ locateFile });
-
-        libPromise.then((loadedLib) => {
-            lib = loadedLib;
-            instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
-            console.log("Mecab initialized! Instance:", instance);
-
-            document.dispatchEvent(new CustomEvent('mecabReady'));
-        }).catch((error) => {
-            console.error("Failed to load Mecab:", error);
-        });
-    } catch (error) {
-        console.error("Error during initialization:", error);
-    }
-})();
+        document.dispatchEvent(new CustomEvent('mecabReady'));
+    })
+    .catch((error) => {
+        console.error("Failed to load MeCab:", error);
+    });
 
 class Mecab {
     static async waitReady() {
-        await libPromise; // Use the globally defined libPromise
+        await libPromise; // Ensure library is loaded before proceeding
         document.dispatchEvent(new CustomEvent('mecabLoaded'));
     }
 
     static query(str) {
         return new Promise((resolve, reject) => {
             if (!instance) {
-                reject(new Error('Mecab not ready'));
+                reject(new Error('MeCab not ready'));
                 return;
             }
 
@@ -104,12 +75,12 @@ class Mecab {
             lib._free(outArr);
 
             if (!ret) {
-                console.error(`Mecab failed for input: "${str}"`);
+                console.error(`MeCab failed for input: "${str}"`);
                 resolve({ recognized: [], unrecognized: [str] });
                 return;
             }
 
-            console.log("Mecab Result:", ret);
+            console.log("MeCab Result:", ret);
 
             let result = [];
             let unrecognizedWords = [];
