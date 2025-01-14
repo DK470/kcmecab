@@ -17,6 +17,9 @@ async function retryFetch(url, retries = 3, delay = 1000) {
 
 // Preload and cache required files
 const preloadedFiles = {};
+let libPromise; // Define libPromise globally
+let lib;
+let instance;
 
 async function preloadFiles() {
     const baseUrl = "https://unpkg.com/mecab-wasm@1.0.3/lib/";
@@ -46,16 +49,14 @@ function locateFile(fn) {
     }
 }
 
-let lib;
-let instance;
-
+// Initialize Mecab asynchronously
 (async () => {
     try {
         // Preload required files
         await preloadFiles();
 
-        // Load Mecab with preloaded files
-        const libPromise = LoadMecab({ locateFile });
+        // Initialize Mecab and assign libPromise
+        libPromise = LoadMecab({ locateFile });
 
         libPromise.then((loadedLib) => {
             lib = loadedLib;
@@ -73,7 +74,7 @@ let instance;
 
 class Mecab {
     static async waitReady() {
-        await libPromise;
+        await libPromise; // Use the globally defined libPromise
         document.dispatchEvent(new CustomEvent('mecabLoaded'));
     }
 
