@@ -16,18 +16,44 @@ let lib;
 let instance;
 let libPromise = LoadMecab({ locateFile });
 
-libPromise.then((loadedLib) => {
-    lib = loadedLib;
-    instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
-    console.log("Mecab initialized! Instance:", instance);
+// Flag to prevent multiple loading attempts
+let isMeCabLoaded = false;
 
-    document.dispatchEvent(new CustomEvent('mecabReady'));
-}).catch((error) => {
-    console.error("Failed to load Mecab:", error);
-});
+// Load MeCab and setup
+function initializeMeCab() {
+    libPromise.then((loadedLib) => {
+        lib = loadedLib;
+        instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
+        console.log("MeCab initialized! Instance:", instance);
+        isMeCabLoaded = true;
+        document.dispatchEvent(new CustomEvent('mecabReady'));
+    }).catch((error) => {
+        console.error("Failed to load Mecab:", error);
+        showErrorMessage("Failed to load MeCab. Please try again later.");
+    });
+}
 
+// Function to display error message
+function showErrorMessage(message) {
+    const errorElement = document.getElementById('errorMessage');
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+}
+
+// Retry loading MeCab
+function retryLoadMecab() {
+    isMeCabLoaded = false;
+    libPromise = LoadMecab({ locateFile });
+    initializeMeCab();
+}
+
+// Wait for MeCab to load before using it
 class Mecab {
     static async waitReady() {
+        if (isMeCabLoaded) {
+            return;  // MeCab is already loaded, no need to show loading indicator
+        }
+
         await libPromise;
         document.dispatchEvent(new CustomEvent('mecabLoaded'));
     }
@@ -63,7 +89,7 @@ class Mecab {
                 return;
             }
 
-            console.log("Mecab Result:", ret);
+            console.log("MeCab Result:", ret);
 
             let result = [];
             let unrecognizedWords = [];
@@ -100,5 +126,8 @@ class Mecab {
         });
     }
 }
+
+// Initializing MeCab when the script loads
+initializeMeCab();
 
 export default Mecab;
