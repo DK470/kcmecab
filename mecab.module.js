@@ -65,7 +65,7 @@ function retryLoadMissingParts() {
             .catch((error) => {
                 console.error("Error during retry:", error);
                 showErrorMessage("Failed to load MeCab components. Retrying...");
-                setTimeout(retryLoadMissingParts, 5000); // Retry after a delay
+                setTimeout(retryLoadMissingParts, 20000); // Retry after a delay
             });
     }
 }
@@ -79,7 +79,7 @@ function showErrorMessage(message) {
     }
     setTimeout(() => {
         if (errorElement) errorElement.style.display = 'none';
-    }, 5000); // Automatically hide after 5 seconds
+    }, 20000); // Automatically hide after 5 seconds
 }
 
 // Class to interact with MeCab
