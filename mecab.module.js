@@ -100,6 +100,7 @@ class Mecab {
 
                 let result = [];
                 let malformedLines = [];
+                let unrecognizedWords = [];
                 let lines = ret.split('\n');
 
                 for (let line of lines) {
@@ -136,11 +137,11 @@ class Mecab {
 
                 if (result.length === 0) {
                     console.error("MeCab results are empty or invalid!");
-                    reject(new Error("MeCab returned no valid results"));
+                    resolve({ recognized: [], unrecognized: [str] }); // Return the input as unrecognized
                     return;
                 }
 
-                resolve({ recognized: result, unrecognized: [] });
+                resolve({ recognized: result, unrecognized: unrecognizedWords });
             } catch (error) {
                 console.error("MeCab query error:", error);
                 reject(error);
