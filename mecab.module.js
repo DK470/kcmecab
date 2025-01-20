@@ -36,17 +36,28 @@ function initializeMeCab() {
 
 // Retry MeCab Initialization
 function retryLoadMecab() {
-    if (instance) lib.ccall('mecab_destroy', null, ['number'], [instance]); // Cleanup
+    if (instance) {
+        try {
+            lib.ccall('mecab_destroy', null, ['number'], [instance]); // Cleanup
+        } catch (err) {
+            console.warn("Failed to destroy existing MeCab instance:", err);
+        }
+    }
     isMeCabLoaded = false;
-    libPromise = LoadMecab({ locateFile });
+    libPromise = LoadMecab({ locateFile }); // Reload MeCab
     initializeMeCab();
 }
 
 // Error message display
 function showErrorMessage(message) {
     const errorElement = document.getElementById('errorMessage');
-    errorElement.textContent = message;
-    errorElement.style.display = 'block';
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
+    setTimeout(() => {
+        if (errorElement) errorElement.style.display = 'none';
+    }, 5000); // Automatically hide after 5 seconds
 }
 
 // Class to interact with MeCab
@@ -67,7 +78,6 @@ class Mecab {
 
             console.log("Processing string:", str);
 
-            // Estimate output size
             const estimatedTokens = Math.max(10, Math.ceil(str.length / 3));
             const outLength = estimatedTokens * 512;
 
@@ -86,14 +96,14 @@ class Mecab {
                     throw new Error(`MeCab failed for input: "${str}"`);
                 }
 
-                console.log("MeCab Result:", ret);
+                console.log("Raw MeCab Result:", ret);
 
                 let result = [];
                 let malformedLines = [];
                 let lines = ret.split('\n');
 
                 for (let line of lines) {
-                    if (!line) continue;
+                    if (!line.trim()) continue; // Skip empty lines
 
                     const sp = line.split('\t');
                     if (sp.length < 2) {
@@ -104,7 +114,7 @@ class Mecab {
                     const word = sp[0];
                     const fields = sp[1].split(',');
 
-                    result.push({
+                    const entry = {
                         word,
                         pos: fields[0] || "Unknown",
                         pos_detail1: fields[1] || "Unknown",
@@ -115,11 +125,19 @@ class Mecab {
                         dictionary_form: fields[6] || word,
                         reading: fields[7] || "Unknown",
                         pronunciation: fields[8] || "Unknown"
-                    });
+                    };
+
+                    result.push(entry);
                 }
 
                 if (malformedLines.length > 0) {
                     console.warn("Malformed Lines Detected:", malformedLines);
+                }
+
+                if (result.length === 0) {
+                    console.error("MeCab results are empty or invalid!");
+                    reject(new Error("MeCab returned no valid results"));
+                    return;
                 }
 
                 resolve({ recognized: result, unrecognized: [] });
