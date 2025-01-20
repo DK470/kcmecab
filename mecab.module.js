@@ -13,8 +13,10 @@ function locateFile(fn) {
 
 let lib;
 let instance;
-let libPromise = LoadMecab({ locateFile });
+let wasmLoaded = false;
+let dataLoaded = false;
 let isMeCabLoaded = false;
+let libPromise = LoadMecab({ locateFile });
 
 // Initialize MeCab
 function initializeMeCab() {
@@ -31,21 +33,41 @@ function initializeMeCab() {
     }).catch((error) => {
         console.error("Failed to load MeCab:", error);
         showErrorMessage("Failed to load MeCab. Please try again.");
+        retryLoadMissingParts();
     });
 }
 
-// Retry MeCab Initialization
-function retryLoadMecab() {
-    if (instance) {
-        try {
-            lib.ccall('mecab_destroy', null, ['number'], [instance]); // Cleanup
-        } catch (err) {
-            console.warn("Failed to destroy existing MeCab instance:", err);
+// Retry loading missing parts of MeCab (either wasm or data)
+function retryLoadMissingParts() {
+    if (!wasmLoaded || !dataLoaded) {
+        if (!wasmLoaded) {
+            console.log("Retrying to load libmecab.wasm...");
+            wasmLoaded = false; // Mark wasm as not loaded
         }
+        if (!dataLoaded) {
+            console.log("Retrying to load libmecab.data...");
+            dataLoaded = false; // Mark data as not loaded
+        }
+
+        libPromise = LoadMecab({ locateFile })
+            .then((loadedLib) => {
+                lib = loadedLib;
+                instance = lib.ccall('mecab_new2', 'number', ['string'], ['']);
+                if (instance) {
+                    console.log("MeCab instance created successfully.");
+                    isMeCabLoaded = true;
+                    document.dispatchEvent(new CustomEvent('mecabReady'));
+                    return;
+                } else {
+                    throw new Error("Failed to create MeCab instance after retrying");
+                }
+            })
+            .catch((error) => {
+                console.error("Error during retry:", error);
+                showErrorMessage("Failed to load MeCab components. Retrying...");
+                setTimeout(retryLoadMissingParts, 5000); // Retry after a delay
+            });
     }
-    isMeCabLoaded = false;
-    libPromise = LoadMecab({ locateFile }); // Reload MeCab
-    initializeMeCab();
 }
 
 // Error message display
@@ -64,7 +86,7 @@ function showErrorMessage(message) {
 class Mecab {
     static async waitReady() {
         if (!isMeCabLoaded) {
-            await libPromise;
+            await libPromise; // Wait for MeCab to load if not already loaded
             document.dispatchEvent(new CustomEvent('mecabLoaded'));
         }
     }
@@ -81,7 +103,7 @@ class Mecab {
             const estimatedTokens = Math.max(10, Math.ceil(str.length / 3));
             const outLength = estimatedTokens * 512;
 
-            let outArr = lib._malloc(outLength); // Allocate memory
+            let outArr = lib._malloc(outLength); // Allocate memory for output
             let ret;
 
             try {
