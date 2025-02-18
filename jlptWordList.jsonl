@@ -2625,7 +2625,7 @@
 {"word": "特徴", "hiragana": "とくちょう", "definition": "feature, characteristic", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2674"}
 {"word": "笑い", "hiragana": "わらい", "definition": "laugh, laughter, smile", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2675"}
 {"word": "大家", "hiragana": "おおや", "definition": "rich family, distinguished family", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2676"}
-{"word": "うん", "hiragana": "（感）", "definition": "fortune, luck", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2677"}
+{"word": "うん", "hiragana": "感", "definition": "fortune, luck", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2677"}
 {"word": "刈る", "hiragana": "かる", "definition": "to cut (hair), to mow (grass), to harvest", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2678"}
 {"word": "丸", "hiragana": "まる", "definition": "circle, full (month), perfection, purity", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2679"}
 {"word": "御", "hiragana": "お", "definition": "honourable", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2680"}
@@ -2640,7 +2640,7 @@
 {"word": "救う", "hiragana": "すくう", "definition": "to rescue from, to help out of", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2689"}
 {"word": "小麦", "hiragana": "こむぎ", "definition": "wheat", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2690"}
 {"word": "便", "hiragana": "びん", "definition": "way, means", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2691"}
-{"word": "暖かい", "hiragana": "あたたか(い)", "definition": "warm, mild", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2692"}
+{"word": "暖かい", "hiragana": "あたたかい", "definition": "warm, mild", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2692"}
 {"word": "空", "hiragana": "から", "definition": "sky", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2693"}
 {"word": "王", "hiragana": "おう", "definition": "king, ruler, sovereign, monarch", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2694"}
 {"word": "茶", "hiragana": "ちゃ", "definition": "tea", "jlptLv": "N3", "CEFRLv": "CEFR B1", "appLv": "Level 3", "id": "jlpt2695"}
