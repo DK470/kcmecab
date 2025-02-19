@@ -666,7 +666,7 @@
 {"word": "不便", "hiragana": "ふべん", "definition": "inconvenience", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt689"}
 {"word": "息子", "hiragana": "むすこ", "definition": "(humble) son", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt690"}
 {"word": "卒業", "hiragana": "そつぎょう", "definition": "graduation", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt691"}
-{"word": "けが・する", "hiragana": "けが・する", "definition": "to injure", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt692"}
+{"word": "けがする", "hiragana": "けがする", "definition": "to injure", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt692"}
 {"word": "味", "hiragana": "あじ", "definition": "flavour", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt693"}
 {"word": "喜ぶ", "hiragana": "よろこぶ", "definition": "to be delighted", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt694"}
 {"word": "もし", "hiragana": "もし", "definition": "if", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt695"}
@@ -679,8 +679,8 @@
 {"word": "よろしい", "hiragana": "よろしい", "definition": "(respectful) OK, all right", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt702"}
 {"word": "普通", "hiragana": "ふつう", "definition": "usually, or a train that stops at every station", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt703"}
 {"word": "戦争", "hiragana": "せんそう", "definition": "war", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt704"}
-{"word": "けんか・する", "hiragana": "けんか・する", "definition": "to quarrel", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt705"}
-{"word": "経験", "hiragana": "けいけん・する", "definition": "to experience", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt706"}
+{"word": "けんかする", "hiragana": "けんかする", "definition": "to quarrel", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt705"}
+{"word": "経験", "hiragana": "けいけんする", "definition": "to experience", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt706"}
 {"word": "見える", "hiragana": "みえる", "definition": "to be in sight", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt707"}
 {"word": "技術", "hiragana": "ぎじゅつ", "definition": "art, technology, skill", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt708"}
 {"word": "代わり", "hiragana": "かわり", "definition": "substitute, alternate", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt709"}
@@ -693,9 +693,9 @@
 {"word": "アルコール", "hiragana": "アルコール", "definition": "alcohol", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt716"}
 {"word": "裏", "hiragana": "うら", "definition": "reverse side", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt717"}
 {"word": "売り場", "hiragana": "うりば", "definition": "place where things are sold", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt718"}
-{"word": "故障", "hiragana": "こしょう・する", "definition": "to break-down", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt719"}
+{"word": "故障", "hiragana": "こしょうする", "definition": "to break-down", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt719"}
 {"word": "新聞社", "hiragana": "しんぶんしゃ", "definition": "newspaper company", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt720"}
-{"word": "お・金持ち", "hiragana": "かねもち", "definition": "rich man", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt721"}
+{"word": "お金持ち", "hiragana": "かねもち", "definition": "rich man", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt721"}
 {"word": "尋ねる", "hiragana": "たずねる", "definition": "to ask", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt722"}
 {"word": "はっきり", "hiragana": "はっきり", "definition": "clearly", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt723"}
 {"word": "致す", "hiragana": "いたす", "definition": "(humble) to do", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt724"}
@@ -734,7 +734,7 @@
 {"word": "ぜひ", "hiragana": "ぜひ", "definition": "without fail", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt757"}
 {"word": "番組", "hiragana": "ばんぐみ", "definition": "television or radio program", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt758"}
 {"word": "教育", "hiragana": "きょういく", "definition": "education", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt759"}
-{"word": "びっくり・する", "hiragana": "びっくり・する", "definition": "to be surprised", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt760"}
+{"word": "びっくりする", "hiragana": "びっくりする", "definition": "to be surprised", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt760"}
 {"word": "それに", "hiragana": "それに", "definition": "moreover", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt761"}
 {"word": "日記", "hiragana": "にっき", "definition": "journal", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt762"}
 {"word": "大事", "hiragana": "だいじ", "definition": "important, valuable, serious matter", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt763"}
@@ -779,7 +779,7 @@
 {"word": "娘", "hiragana": "むすめ", "definition": "(humble) daughter", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt803"}
 {"word": "眠い", "hiragana": "ねむい", "definition": "sleepy", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt804"}
 {"word": "用", "hiragana": "よう", "definition": "use", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt805"}
-{"word": "拝見", "hiragana": "はいけん・する", "definition": "(humble) to look at", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt806"}
+{"word": "拝見", "hiragana": "はいけんする", "definition": "(humble) to look at", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt806"}
 {"word": "漫画", "hiragana": "まんが", "definition": "comic", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt807"}
 {"word": "教会", "hiragana": "きょうかい", "definition": "church", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt808"}
 {"word": "旅館", "hiragana": "りょかん", "definition": "Japanese hotel", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt809"}
@@ -788,13 +788,13 @@
 {"word": "寺", "hiragana": "てら", "definition": "temple", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt812"}
 {"word": "釣る", "hiragana": "つる", "definition": "to fish", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt813"}
 {"word": "おもちゃ", "hiragana": "おもちゃ", "definition": "toy", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt814"}
-{"word": "放送", "hiragana": "ほうそう・する", "definition": "to broadcast", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt815"}
+{"word": "放送", "hiragana": "ほうそうする", "definition": "to broadcast", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt815"}
 {"word": "やっと", "hiragana": "やっと", "definition": "at last", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt816"}
 {"word": "すり", "hiragana": "すり", "definition": "pickpocket", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt817"}
 {"word": "下りる", "hiragana": "おりる", "definition": "to get off", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt818"}
 {"word": "落す", "hiragana": "おとす", "definition": "to drop", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt819"}
 {"word": "とうとう", "hiragana": "とうとう", "definition": "finally, after all", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt820"}
-{"word": "案内", "hiragana": "あんない・する", "definition": "to guide", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt821"}
+{"word": "案内", "hiragana": "あんないする", "definition": "to guide", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt821"}
 {"word": "お見舞い", "hiragana": "おみまい", "definition": "calling on someone who is ill, enquiry", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt822"}
 {"word": "つき", "hiragana": "つき", "definition": "moon", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt823"}
 {"word": "サンドイッチ", "hiragana": "サンドイッチ", "definition": "sandwich", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt824"}
@@ -814,8 +814,8 @@
 {"word": "彼女", "hiragana": "かのじょ", "definition": "she, girlfriend", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt838"}
 {"word": "運転手", "hiragana": "うんてんしゅ", "definition": "driver", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt839"}
 {"word": "拾う", "hiragana": "ひろう", "definition": "to pick up, to gather", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt840"}
-{"word": "入院", "hiragana": "にゅういん・する", "definition": "to hospitalise", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt841"}
-{"word": "遠慮", "hiragana": "えんりょ・する", "definition": "to be reserved, to be restrained", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt842"}
+{"word": "入院", "hiragana": "にゅういんする", "definition": "to hospitalise", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt841"}
+{"word": "遠慮", "hiragana": "えんりょする", "definition": "to be reserved, to be restrained", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt842"}
 {"word": "ビル", "hiragana": "ビル", "definition": "building or bill", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt843"}
 {"word": "地理", "hiragana": "ちり", "definition": "geography", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt844"}
 {"word": "役に立つ", "hiragana": "やくにたつ", "definition": "to be helpful", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt845"}
@@ -825,18 +825,18 @@
 {"word": "回る", "hiragana": "まわる", "definition": "to go around", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt849"}
 {"word": "神社", "hiragana": "じんじゃ", "definition": "Shinto shrine", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt850"}
 {"word": "けれど", "hiragana": "けれど", "definition": "however", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt851"}
-{"word": "支度", "hiragana": "したく・する", "definition": "to prepare", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt852"}
+{"word": "支度", "hiragana": "したくする", "definition": "to prepare", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt852"}
 {"word": "ほど", "hiragana": "ほど", "definition": "extent", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt853"}
 {"word": "ほめる", "hiragana": "ほめる", "definition": "to praise", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt854"}
 {"word": "君", "hiragana": "きみ", "definition": "(informal) You (used by men towards women)", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt855"}
-{"word": "相談", "hiragana": "そうだん・する", "definition": "to discuss", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt856"}
+{"word": "相談", "hiragana": "そうだんする", "definition": "to discuss", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt856"}
 {"word": "産業", "hiragana": "さんぎょう", "definition": "industry", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt857"}
 {"word": "工業", "hiragana": "こうぎょう", "definition": "the manufacturing industry", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt858"}
 {"word": "特別", "hiragana": "とくべつ", "definition": "special", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt859"}
 {"word": "たいてい", "hiragana": "たいてい", "definition": "usually", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt860"}
 {"word": "恥ずかしい", "hiragana": "はずかしい", "definition": "embarrassed", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt861"}
 {"word": "屋上", "hiragana": "おくじょう", "definition": "rooftop", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt862"}
-{"word": "輸入", "hiragana": "ゆにゅう・する", "definition": "to import", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt863"}
+{"word": "輸入", "hiragana": "ゆにゅうする", "definition": "to import", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt863"}
 {"word": "のど", "hiragana": "のど", "definition": "throat", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt864"}
 {"word": "下げる", "hiragana": "さげる", "definition": "to hang, to lower, to move back", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt865"}
 {"word": "久しぶり", "hiragana": "ひさしぶり", "definition": "after a long time", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt866"}
@@ -912,7 +912,7 @@
 {"word": "警察", "hiragana": "けいさつ", "definition": "police", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt937"}
 {"word": "彼ら", "hiragana": "かれら", "definition": "they", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt938"}
 {"word": "すると", "hiragana": "すると", "definition": "then", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt939"}
-{"word": "輸出", "hiragana": "ゆしゅつ・する", "definition": "to export", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt940"}
+{"word": "輸出", "hiragana": "ゆしゅつする", "definition": "to export", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt940"}
 {"word": "このあいだ", "hiragana": "このあいだ", "definition": "the other day, recently", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt941"}
 {"word": "興味", "hiragana": "きょうみ", "definition": "an interest", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt942"}
 {"word": "テキスト", "hiragana": "テキスト", "definition": "text, text book", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt943"}
@@ -942,7 +942,7 @@
 {"word": "祈る", "hiragana": "いのる", "definition": "to pray", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt967"}
 {"word": "親", "hiragana": "おや", "definition": "parents", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt968"}
 {"word": "布団", "hiragana": "ふとん", "definition": "Japanese bedding, futon", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt969"}
-{"word": "チェック・する", "hiragana": "チェック・する", "definition": "to check", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt970"}
+{"word": "チェックする", "hiragana": "チェックする", "definition": "to check", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt970"}
 {"word": "それほど", "hiragana": "それほど", "definition": "to that extent", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt971"}
 {"word": "鏡", "hiragana": "かがみ", "definition": "mirror", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt972"}
 {"word": "踏む", "hiragana": "ふむ", "definition": "to step on", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt973"}
@@ -959,7 +959,7 @@
 {"word": "お土産", "hiragana": "おみやげ", "definition": "souvenir", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt984"}
 {"word": "そんなに", "hiragana": "そんなに", "definition": "so much, like that", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt985"}
 {"word": "歯医者", "hiragana": "はいしゃ", "definition": "dentist", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt986"}
-{"word": "運動", "hiragana": "うんどう・する", "definition": "to exercise", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt987"}
+{"word": "運動", "hiragana": "うんどうする", "definition": "to exercise", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt987"}
 {"word": "糸", "hiragana": "いと", "definition": "thread", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt988"}
 {"word": "あかちゃん", "hiragana": "あかちゃん", "definition": "infant", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt989"}
 {"word": "予習", "hiragana": "よしゅう", "definition": "preparation for a lesson", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt990"}
@@ -985,11 +985,11 @@
 {"word": "だめ", "hiragana": "だめ", "definition": "no good", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1010"}
 {"word": "済む", "hiragana": "すむ", "definition": "to finish", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1011"}
 {"word": "お嬢さん", "hiragana": "おじょうさん", "definition": "young lady", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1012"}
-{"word": "心配", "hiragana": "しんぱい・する", "definition": "to worry", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1013"}
+{"word": "心配", "hiragana": "しんぱいする", "definition": "to worry", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1013"}
 {"word": "折れる", "hiragana": "おれる", "definition": "to break or be folded", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1014"}
 {"word": "これから", "hiragana": "これから", "definition": "after this", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1015"}
-{"word": "準備", "hiragana": "じゅんび・する", "definition": "to prepare", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1016"}
-{"word": "招待", "hiragana": "しょうたい・する", "definition": "to invite", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1017"}
+{"word": "準備", "hiragana": "じゅんびする", "definition": "to prepare", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1016"}
+{"word": "招待", "hiragana": "しょうたいする", "definition": "to invite", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1017"}
 {"word": "交通", "hiragana": "こうつう", "definition": "traffic, transportation", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1018"}
 {"word": "寄る", "hiragana": "よる", "definition": "to visit", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1019"}
 {"word": "すっと", "hiragana": "すっと", "definition": "straight, all of a sudden", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1020"}
@@ -1008,7 +1008,7 @@
 {"word": "お宅", "hiragana": "おたく", "definition": "(polite) your house", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1033"}
 {"word": "特に", "hiragana": "とくに", "definition": "particularly, especially", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1034"}
 {"word": "湖", "hiragana": "みずうみ", "definition": "lake", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1035"}
-{"word": "出発", "hiragana": "しゅっぱつ・する", "definition": "to depart", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1036"}
+{"word": "出発", "hiragana": "しゅっぱつする", "definition": "to depart", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1036"}
 {"word": "アフリカ", "hiragana": "アフリカ", "definition": "Africa", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1037"}
 {"word": "以下", "hiragana": "いか", "definition": "less than", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1038"}
 {"word": "適当", "hiragana": "てきとう", "definition": "suitability", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1039"}
@@ -1030,20 +1030,20 @@
 {"word": "動物園", "hiragana": "どうぶつえん", "definition": "zoo", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1055"}
 {"word": "失敗", "hiragana": "しっぱい", "definition": "failure, mistake", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1056"}
 {"word": "周り", "hiragana": "まわり", "definition": "surroundings", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1057"}
-{"word": "運転", "hiragana": "うんてん・する", "definition": "to drive", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1058"}
+{"word": "運転", "hiragana": "うんてんする", "definition": "to drive", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1058"}
 {"word": "市", "hiragana": "し", "definition": "city", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1059"}
 {"word": "過ぎる", "hiragana": "すぎる", "definition": "to exceed", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1060"}
 {"word": "手伝う", "hiragana": "てつだう", "definition": "to assist", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1061"}
-{"word": "あいさつ・する", "hiragana": "あいさつ・する", "definition": "to greet", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1062"}
+{"word": "あいさつする", "hiragana": "あいさつする", "definition": "to greet", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1062"}
 {"word": "先輩", "hiragana": "せんぱい", "definition": "senior", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1063"}
 {"word": "髪", "hiragana": "かみ", "definition": "hair", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1064"}
 {"word": "戻る", "hiragana": "もどる", "definition": "to turn back", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1065"}
 {"word": "昼休み", "hiragana": "ひるやすみ", "definition": "noon break", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1066"}
 {"word": "説明", "hiragana": "せつめい", "definition": "explanation", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1067"}
-{"word": "生活", "hiragana": "せいかつ・する", "definition": "to live", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1068"}
+{"word": "生活", "hiragana": "せいかつする", "definition": "to live", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1068"}
 {"word": "両方", "hiragana": "りょうほう", "definition": "both sides", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1069"}
 {"word": "遠く", "hiragana": "とおく", "definition": "distant", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1070"}
-{"word": "生産", "hiragana": "せいさん・する", "definition": "to produce", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1071"}
+{"word": "生産", "hiragana": "せいさんする", "definition": "to produce", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1071"}
 {"word": "上る", "hiragana": "あがる", "definition": "to rise", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1072"}
 {"word": "壁", "hiragana": "かべ", "definition": "wall", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1073"}
 {"word": "線", "hiragana": "せん", "definition": "line", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1074"}
@@ -1112,7 +1112,7 @@
 {"word": "森", "hiragana": "もり", "definition": "forest", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1137"}
 {"word": "住所", "hiragana": "じゅうしょ", "definition": "an address, a residence", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1139"}
 {"word": "捨てる", "hiragana": "すてる", "definition": "to throw away", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1140"}
-{"word": "承知", "hiragana": "しょうち・する", "definition": "to consent", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1141"}
+{"word": "承知", "hiragana": "しょうちする", "definition": "to consent", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1141"}
 {"word": "湯", "hiragana": "ゆ", "definition": "hot water", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1142"}
 {"word": "アナウンサー", "hiragana": "アナウンサー", "definition": "announcer", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1143"}
 {"word": "ぬれる", "hiragana": "ぬれる", "definition": "to get wet", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1144"}
@@ -1127,7 +1127,7 @@
 {"word": "知らせる", "hiragana": "しらせる", "definition": "to notify", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1153"}
 {"word": "必要", "hiragana": "ひつよう", "definition": "necessary", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1154"}
 {"word": "明日", "hiragana": "あす", "definition": "tomorrow", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1155"}
-{"word": "計画", "hiragana": "けいかく・する", "definition": "to plan", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1156"}
+{"word": "計画", "hiragana": "けいかくする", "definition": "to plan", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1156"}
 {"word": "音", "hiragana": "おと", "definition": "sound, note", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1157"}
 {"word": "舟", "hiragana": "ふね", "definition": "ship", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1158"}
 {"word": "別れる", "hiragana": "わかれる", "definition": "to separate", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1159"}
@@ -1208,9 +1208,9 @@
 {"word": "水道", "hiragana": "すいどう", "definition": "water supply", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1234"}
 {"word": "形", "hiragana": "かたち", "definition": "shape", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1235"}
 {"word": "ひげ", "hiragana": "ひげ", "definition": "beard", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1236"}
-{"word": "入学", "hiragana": "にゅうがく・する", "definition": "to enter school or university", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1237"}
+{"word": "入学", "hiragana": "にゅうがくする", "definition": "to enter school or university", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1237"}
 {"word": "汽車", "hiragana": "きしゃ", "definition": "steam train", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1238"}
-{"word": "世話", "hiragana": "せわ・する", "definition": "to look after", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1239"}
+{"word": "世話", "hiragana": "せわする", "definition": "to look after", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1239"}
 {"word": "パート", "hiragana": "パート", "definition": "part time", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1240"}
 {"word": "おかしい", "hiragana": "おかしい", "definition": "strange or funny", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1241"}
 {"word": "大学生", "hiragana": "だいがくせい", "definition": "university student", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1242"}
@@ -1230,7 +1230,7 @@
 {"word": "以内", "hiragana": "いない", "definition": "within", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1256"}
 {"word": "盗む", "hiragana": "ぬすむ", "definition": "to steal", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1257"}
 {"word": "似る", "hiragana": "にる", "definition": "to be similar", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1258"}
-{"word": "退院", "hiragana": "たいいん・する", "definition": "to leave hospital", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1259"}
+{"word": "退院", "hiragana": "たいいんする", "definition": "to leave hospital", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1259"}
 {"word": "石", "hiragana": "いし", "definition": "stone", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1260"}
 {"word": "泣く", "hiragana": "なく", "definition": "to weep", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1261"}
 {"word": "盛ん", "hiragana": "さかん", "definition": "popularity, prosperous", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1262"}
@@ -1246,7 +1246,7 @@
 {"word": "会議", "hiragana": "かいぎ", "definition": "meeting", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1272"}
 {"word": "優しい", "hiragana": "やさしい", "definition": "kind", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1273"}
 {"word": "小学校", "hiragana": "しょうがっこう", "definition": "elementary school", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1274"}
-{"word": "食事", "hiragana": "しょくじ・する", "definition": "to have a meal", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1275"}
+{"word": "食事", "hiragana": "しょくじする", "definition": "to have a meal", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1275"}
 {"word": "そう", "hiragana": "そう", "definition": "really", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1276"}
 {"word": "島", "hiragana": "しま", "definition": "island", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1277"}
 {"word": "とこや", "hiragana": "とこや", "definition": "barber", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1278"}
@@ -1256,7 +1256,7 @@
 {"word": "急ぐ", "hiragana": "いそぐ", "definition": "to hurry", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1282"}
 {"word": "用事", "hiragana": "ようじ", "definition": "things to do", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1283"}
 {"word": "場合", "hiragana": "ばあい", "definition": "situation", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1284"}
-{"word": "出席", "hiragana": "しゅっせき・する", "definition": "to attend", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1285"}
+{"word": "出席", "hiragana": "しゅっせきする", "definition": "to attend", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1285"}
 {"word": "紹介", "hiragana": "しょうかい", "definition": "introduction", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1286"}
 {"word": "急", "hiragana": "きゅう", "definition": "urgent, steep", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1287"}
 {"word": "電灯", "hiragana": "でんとう", "definition": "electric light", "jlptLv": "N4", "CEFRLv": "CEFR A2", "appLv": "Level 2", "id": "jlpt1288"}
